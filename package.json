@@ -1,0 +1,24 @@
+{
+  "name": "pds-academy",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "./src/@core",
+    "./src/nestjs"
+  ],
+  "scripts": {
+    "prestart:dev": "yarn build -w @pds/academy-core",
+    "start:dev": "yarn build:w -w @pds/academy-core & yarn start:dev -w nestjs",
+    "test": "yarn jest",
+    "test:cov": "yarn jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcpaschoal/Pds-Academy.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^2.8.7"
+  }
+}

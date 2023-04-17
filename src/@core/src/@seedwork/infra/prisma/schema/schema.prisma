@@ -1,0 +1,215 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+model Permission {
+  id_permission     Int                 @id @default(autoincrement())
+  name              String              @unique @db.VarChar(45)
+  GroupHasPermssion GroupHasPermssion[]
+}
+
+model GroupHasPermssion {
+  permission_id Int
+  group_id      Int
+  permission    Permission @relation(fields: [permission_id], references: [id_permission])
+  group         Group      @relation(fields: [group_id], references: [id_group])
+
+  @@id([permission_id, group_id])
+}
+
+model Group {
+  id_group          Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(45)
+  GroupHasPermssion GroupHasPermssion[]
+  users             User[]
+}
+
+model User {
+  id_user             String                @id @default(uuid()) @db.Uuid
+  first_name          String                @db.VarChar(45)
+  last_name           String                @db.VarChar(45)
+  email               String                @unique @db.VarChar(255)
+  password            String                @db.Char(60)
+  status              Boolean               @default(true)
+  group               Group                 @relation(fields: [group_id], references: [id_group])
+  group_id            Int
+  created_at          DateTime              @default(now()) @db.Timestamp()
+  updated_at          DateTime?             @updatedAt @db.Timestamp()
+  inscription         Inscription?
+  address             Address?
+  courses             Course[]
+  commentary          Commentary[]
+  rating              Rating[]
+  userHasCourse       UserHasCourse[]
+  userHasExam         UserHasExam[]
+  inscriptionHasAdmin InscriptionHasAdmin[]
+}
+
+model Address {
+  id_addres   Int       @id @default(autoincrement())
+  user        User      @relation(fields: [user_id], references: [id_user])
+  user_id     String    @unique @db.Uuid
+  number      String    @db.VarChar(45)
+  description String?   @db.VarChar(255)
+  street      String    @db.VarChar(255)
+  postal_code String    @db.VarChar(45)
+  created_at  DateTime  @default(now()) @db.Timestamp()
+  updated_at  DateTime? @updatedAt @db.Timestamp()
+}
+
+enum InscriptionStatus {
+  Pendent
+  Denied
+  Approved
+}
+
+model Inscription {
+  id_inscription      Int                   @id @default(autoincrement())
+  user                User                  @relation(fields: [user_id], references: [id_user])
+  user_id             String                @unique @db.Uuid
+  document_path       String                @db.VarChar(200)
+  status              InscriptionStatus     @default(Pendent)
+  created_at          DateTime              @default(now()) @db.Timestamp()
+  updated_at          DateTime?             @updatedAt @db.Timestamp()
+  inscriptionHasAdmin InscriptionHasAdmin[]
+}
+
+model InscriptionHasAdmin {
+  user_id        String      @db.Uuid
+  inscription_id Int
+  inscription    Inscription @relation(fields: [inscription_id], references: [id_inscription])
+  user           User        @relation(fields: [user_id], references: [id_user])
+
+  @@id([inscription_id, user_id])
+}
+
+model UserHasExam {
+  user_id   String   @db.Uuid
+  exam_id   Int
+  score     Decimal  @db.Decimal(4, 2)
+  exam_date DateTime
+  user_exam Json     @db.Json
+  user      User     @relation(fields: [user_id], references: [id_user])
+  exam      Exam     @relation(fields: [exam_id], references: [id_exam])
+
+  @@id([user_id, exam_id])
+}
+
+model Exam {
+  id_exam         Int               @id @default(autoincrement())
+  created_at      DateTime          @default(now()) @db.Timestamp()
+  userHasExam     UserHasExam[]
+  examHasQuestion ExamHasQuestion[]
+}
+
+model ExamHasQuestion {
+  exam_id     Int
+  question_id Int
+  exam        Exam     @relation(fields: [exam_id], references: [id_exam])
+  question    Question @relation(fields: [question_id], references: [id_question])
+
+  @@id([question_id, exam_id])
+}
+
+model Question {
+  id_question     Int               @id @default(autoincrement())
+  description     String            @unique @db.VarChar(400)
+  answer          String            @db.Char(1)
+  option_a        String            @db.VarChar(255)
+  option_b        String            @db.VarChar(255)
+  option_c        String            @db.VarChar(255)
+  option_d        String            @db.VarChar(255)
+  created_at      DateTime          @default(now()) @db.Timestamp()
+  updated_at      DateTime?         @updatedAt @db.Timestamp()
+  ExamHasQuestion ExamHasQuestion[]
+}
+
+model Category {
+  id_category       Int                 @id @default(autoincrement())
+  name              String              @unique @db.VarChar(255)
+  created_at        DateTime            @default(now()) @db.Timestamp()
+  updated_at        DateTime?           @updatedAt @db.Timestamp()
+  categoryHasCourse CategoryHasCourse[]
+}
+
+model CategoryHasCourse {
+  course_id   String   @db.Uuid
+  category_id Int
+  Category    Category @relation(fields: [category_id], references: [id_category])
+  Course      Course   @relation(fields: [course_id], references: [id_course])
+
+  @@id([course_id, category_id])
+}
+
+model UserHasCourse {
+  course_id String @db.Uuid
+  user_id   String @db.Uuid
+  User      User   @relation(fields: [user_id], references: [id_user])
+  Course    Course @relation(fields: [course_id], references: [id_course])
+
+  @@id([course_id, user_id])
+}
+
+model Course {
+  id_course         String              @id @default(uuid()) @db.Uuid
+  user_id           String              @db.Uuid
+  name              String              @db.VarChar(255)
+  description       String              @db.VarChar(400)
+  min_score         Decimal             @db.Decimal(4, 2)
+  created_at        DateTime            @default(now()) @db.Timestamp()
+  updated_at        DateTime?           @updatedAt @db.Timestamp()
+  user              User                @relation(fields: [user_id], references: [id_user])
+  categoryHasCourse CategoryHasCourse[]
+  userHasCourse     UserHasCourse[]
+  courseModule      CourseModule[]
+}
+
+model CourseModule {
+  id_module   Int       @id @default(autoincrement())
+  course_id   String    @db.Uuid
+  name        String    @db.VarChar(255)
+  order       Int
+  description String?   @db.VarChar(400)
+  created_at  DateTime  @default(now()) @db.Timestamp()
+  updated_at  DateTime? @updatedAt @db.Timestamp()
+  course      Course    @relation(fields: [course_id], references: [id_course])
+  lesson      Lesson[]
+}
+
+model Lesson {
+  id_lesson    Int          @id @default(autoincrement())
+  module_id    Int
+  order        Int
+  name         String       @db.VarChar(255)
+  description  String?      @db.VarChar(400)
+  video_url    String?      @db.VarChar(255)
+  created_at   DateTime     @default(now()) @db.Timestamp()
+  updated_at   DateTime?    @updatedAt @db.Timestamp()
+  courseModule CourseModule @relation(fields: [module_id], references: [id_module])
+}
+
+model Commentary {
+  id_commentary String    @id @default(uuid()) @db.Uuid
+  user_id       String    @db.Uuid
+  course_id     String    @db.Uuid
+  text          String    @db.VarChar(400)
+  created_at    DateTime  @default(now()) @db.Timestamp()
+  updated_at    DateTime? @updatedAt @db.Timestamp()
+  User          User      @relation(fields: [user_id], references: [id_user])
+}
+
+model Rating {
+  id_rating  String    @id @default(uuid()) @db.Uuid
+  user_id    String    @unique @db.Uuid
+  course_id  String    @db.Uuid
+  rating     Decimal   @db.Decimal(3, 2)
+  created_at DateTime  @default(now()) @db.Timestamp()
+  updated_at DateTime? @updatedAt @db.Timestamp()
+  user       User      @relation(fields: [user_id], references: [id_user])
+}
