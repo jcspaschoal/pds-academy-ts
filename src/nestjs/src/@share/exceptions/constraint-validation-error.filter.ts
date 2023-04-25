@@ -10,7 +10,7 @@ export class ConstraintValidationErrorFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
 
     response.status(422).json({
-      statusCode: 422,
+      statusCode: 409,
       error: 'ConstraintValidationError',
       message: exception.message,
     });

@@ -1,20 +1,32 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import {JwtService} from "@nestjs/jwt";
+import {Inject, Injectable, UnauthorizedException} from '@nestjs/common';
+import {JwtService} from '@nestjs/jwt';
+import {comparePassword} from '@pds/academy-core/src/user/infra';
+import {GetUserUseCase} from '@pds/academy-core/src/user/application';
+import {JwtPayload} from "./types";
 
 @Injectable()
 export class AuthService {
+
+    @Inject(GetUserUseCase.UseCase)
+    private getUserUseCase: GetUserUseCase.UseCase
+
     constructor(
         private jwtService: JwtService
-    ) {}
+    ) {
+    }
 
-    async signIn(username, pass) {
-        const user = await this.usersService.findOne(username);
-        if (user?.password !== pass) {
-            throw new UnauthorizedException();
+    async signIn(email: string, password: string) {
+        const user = await this.getUserUseCase.execute({email});
+        if (!await comparePassword(password, user?.password)) {
+            throw new UnauthorizedException()
         }
-        const payload = { username: user.username, sub: user.userId };
+        const payload: JwtPayload = {
+            sub: user.id,
+            permissions: user.group.value.permissions
+        };
         return {
             access_token: await this.jwtService.signAsync(payload),
         };
     }
+
 }

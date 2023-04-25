@@ -1,6 +1,5 @@
 import { UserOutput } from '@pds/academy-core/src/user/application/dto/user-output';
-import { CollectionPresenter } from 'src/@share/presenters/collection.presenter';
-import { GetUserUseCase } from '@pds/academy-core/src/user/application';
+
 
 export class UserPresenter {
   id: string;
@@ -18,11 +17,3 @@ export class UserPresenter {
   }
 }
 
-export class UserColletionPresenter extends CollectionPresenter {
-  data: UserPresenter[];
-  constructor(output: GetUserUseCase.Output) {
-    const { items, ...paginationProps } = output;
-    super(paginationProps);
-    this.data = items.map((item) => new UserPresenter(item));
-  }
-}

@@ -9,7 +9,7 @@ export class PrismaService extends PrismaClient {
       errorFormat: 'pretty',
       datasources: {
         db: {
-          url: 'postgresql://postgres:zeca1234@localhost:5432/pdsacademy',
+          url: 'postgresql://zeca:zeca1234@localhost:5432/pdsacademy',
         },
       },
     });
