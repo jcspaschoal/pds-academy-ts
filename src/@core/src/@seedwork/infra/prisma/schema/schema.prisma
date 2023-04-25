@@ -11,10 +11,10 @@ generator client {
 model Permission {
   id_permission     Int                 @id @default(autoincrement())
   name              String              @unique @db.VarChar(45)
-  GroupHasPermssion GroupHasPermssion[]
+  GroupHasPermssion GroupHasPermission[]
 }
 
-model GroupHasPermssion {
+model GroupHasPermission {
   permission_id Int
   group_id      Int
   permission    Permission @relation(fields: [permission_id], references: [id_permission])
@@ -26,7 +26,7 @@ model GroupHasPermssion {
 model Group {
   id_group          Int                 @id @default(autoincrement())
   name              String              @db.VarChar(45)
-  GroupHasPermssion GroupHasPermssion[]
+  GroupHasPermission GroupHasPermission[]
   users             User[]
 }
 

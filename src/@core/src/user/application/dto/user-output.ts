@@ -16,7 +16,6 @@ export class UserOutputMapper {
 }
 
 export type UpdateUserOutput = {
-  id: string;
   first_name?: string;
   last_name?: string;
 };

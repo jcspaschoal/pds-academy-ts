@@ -3,12 +3,14 @@ import UserRepository from "../../domain/repository/user-repository";
 import { UserOutput, UserOutputMapper } from "../dto";
 import { User } from "../../domain";
 
-export namespace DeleteUserUseCase {
+export namespace DeactivateUserUseCase {
   export class UseCase implements DefaultUseCase<Input, Output> {
     constructor(private userRepository: UserRepository.Repository) {}
 
     async execute(input: Input): Promise<Output> {
-      await this.userRepository.delete(input.id);
+      const user = await this.userRepository.findById(input.id)
+      user.deactivate()
+      await this.userRepository.update(user)
     }
   }
 
@@ -19,4 +21,4 @@ export namespace DeleteUserUseCase {
   export type Output = void;
 }
 
-export default DeleteUserUseCase;
+export default DeactivateUserUseCase;

@@ -1,31 +1,33 @@
-import { default as DefaultUseCase } from "../../../@seedwork/application/use-case";
+import {default as DefaultUseCase} from "../../../@seedwork/application/use-case";
 import UserRepository from "../../domain/repository/user-repository";
-import { UserOutput, UserOutputMapper } from "../dto";
-import { User } from "../../domain";
-import {
-  PaginationOutputDto,
-  PaginationOutputMapper,
-  SearchInputDto,
-} from "../../../@seedwork/application/dto";
+import {UserOutputMapper} from "../dto";
+import {User} from "../../domain";
+import {Group} from "../../domain/value-objects";
+
 
 export namespace GetUserUseCase {
-  export class UseCase implements DefaultUseCase<Input, Output> {
-    constructor(private userRepository: UserRepository.Repository) {}
+    export class UseCase implements DefaultUseCase<Input, Output> {
+        constructor(private userRepository: UserRepository.Repository) {
+        }
 
-    async execute(input: Input): Promise<Output> {
-      const params = new UserRepository.SearchParams(input);
-      const searchResult = await this.userRepository.search(params);
-      return this.toOutput(searchResult);
+        async execute(input: Input): Promise<Output> {
+            const user = await this.userRepository.findByEmail(input.email);
+            return this.toOutput(user)
+        }
+
+        private toOutput(entity: User): Output {
+            return entity.toJSON();
+        }
     }
 
-    private toOutput(searchResult: UserRepository.SearchResult): Output {
-      const items = searchResult.items.map((i) => {
-        return UserOutputMapper.toOutput(i);
-      });
-      return PaginationOutputMapper.toOutput(items, searchResult);
-    }
-  }
+    export type Input = {
+        email: string;
+    };
 
-  export type Input = SearchInputDto;
-  export type Output = PaginationOutputDto<UserOutput>;
+    export type Output = {
+        id: string;
+        email: string;
+        password: string;
+        group: Group;
+    };
 }

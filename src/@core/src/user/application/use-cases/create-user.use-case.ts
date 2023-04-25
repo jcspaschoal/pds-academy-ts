@@ -3,7 +3,7 @@ import UserRepository from "../../domain/repository/user-repository";
 import { UserOutput } from "../dto";
 import { User } from "../../domain";
 
-export namespace CreateUserUserCase {
+export namespace CreateUserUseCase {
   export class UseCase implements DefaultUseCase<Input, Output> {
     constructor(private userRepository: UserRepository.Repository) {}
 
@@ -28,4 +28,4 @@ export namespace CreateUserUserCase {
   export type Output = UserOutput;
 }
 
-export default CreateUserUserCase;
+export default CreateUserUseCase;
