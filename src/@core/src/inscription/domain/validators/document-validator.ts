@@ -1,6 +1,6 @@
 import {IsNotEmpty, IsString, Matches, MaxLength, MinLength} from "class-validator";
 import ClassValidatorFields from "#seedwork/domain/validators/class-validator-fields";
-import {DocumentProps} from "#admin/domain";
+import {DocumentProps} from "#inscription/domain/value-objects";
 
 export class DocumentRules {
 

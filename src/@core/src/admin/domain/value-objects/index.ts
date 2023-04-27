@@ -1,1 +1,1 @@
-export * from "./document.vo"
+export * from './admin-role.vo'

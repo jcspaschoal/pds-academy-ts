@@ -1,1 +1,1 @@
-export * from './document-validator'
+export * from '../../../inscription/domain/validators/document-validator'

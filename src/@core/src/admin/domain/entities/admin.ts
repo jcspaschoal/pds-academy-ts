@@ -1,16 +1,30 @@
-import {UniqueEntityId} from "#seedwork/domain";
-import entity from "#seedwork/domain/entity/entity";
+import {Entity, UniqueEntityId} from "#seedwork/domain";
+import {AdminRole} from "#admin/domain/value-objects/admin-role.vo";
+import {Inscription} from "#inscription/domain/entities";
+
 
 export type AdminProps = {
-    userId: UniqueEntityId | string
+    userId: UniqueEntityId
     analysedInscriptions: UniqueEntityId[] | string[],
+    role: AdminRole;
 }
 
-export class Admin extends entity<AdminProps> {
+export class Admin extends Entity<AdminProps> {
 
+    constructor(public readonly props: AdminProps) {
+        super(props, props.userId);
+    }
 
-    constructor(public readonly props: AdminProps, id?: UniqueEntityId) {
-        super(props, id);
+    get analysedInscriptions() {
+        return this.props.analysedInscriptions
+    }
+
+    approveInscription(inscription: Inscription) {
+        inscription.changeStatusToApproved()
+    }
+
+    dennyInscription(inscription: Inscription) {
+        inscription.changeStatusToDenny()
     }
 
 }

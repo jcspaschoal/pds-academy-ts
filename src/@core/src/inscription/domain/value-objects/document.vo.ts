@@ -1,7 +1,7 @@
-import {EntityValidationError, ValueObject} from "#seedwork/domain";
-import {DocumentValidatorFactory} from "#admin/domain";
+import {ValueObject, ValueObjectValidationError} from "#seedwork/domain";
+import {DocumentValidatorFactory} from "#inscription/domain/validators";
 
-export type DocumentProps  = {
+export type DocumentProps = {
     pathToDocument: string;
 }
 
@@ -16,7 +16,7 @@ export class Document extends ValueObject<DocumentProps> {
         const validator = DocumentValidatorFactory.create()
         const isValid = validator.validate(props)
         if (!isValid) {
-            throw new EntityValidationError(validator.errors);
+            throw new ValueObjectValidationError(validator.errors);
         }
     }
 

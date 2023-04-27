@@ -11,6 +11,9 @@
       ],
       "#admin/*": [
         "./admin/*"
+      ],
+      "#inscription/*": [
+        "./inscription/*"
       ]
     },
     "outDir": "./dist"

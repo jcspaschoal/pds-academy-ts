@@ -7,7 +7,11 @@
     "#seedwork/domain": "./dist/@seedwork/domain/index.js",
     "#seedwork/*": "./dist/@seedwork/*.js",
     "#user/domain": "./dist/user/domain/index.js",
-    "#user/*": "./dist/user/*.js"
+    "#user/*": "./dist/user/*.js",
+    "#admin/*": "./dist/admin/*js",
+    "#admin/domain": "./dist/admin/domain/index.js",
+    "#inscription/*": "./dist/infra/*js",
+    "#inscription/domain": "./dist/infra/domain/index.js"
   },
   "exports": {
     "./@seedwork/application": "./dist/@seedwork/application/index.js",
@@ -18,7 +22,10 @@
     "./user/infra": "./dist/user/infra/index.js",
     "./admin/application": "./dist/admin/application/index.js",
     "./admin/domain": "./dist/admin/domain/index.js",
-    "./admin/infra": "./dist/admin/infra/index.js"
+    "./admin/infra": "./dist/admin/infra/index.js",
+    "./inscription/application": "./dist/inscription/application/index.js",
+    "./inscription/domain": "./dist/inscription/domain/index.js",
+    "./inscription/infra": "./dist/inscription/infra/index.js"
   },
   "typesVersions": {
     ">=4.0": {
@@ -48,6 +55,15 @@
       ],
       "admin/infra": [
         "./dist/admin/infra/index.js"
+      ],
+      "inscription/domain": [
+        "./dist/inscription/domain/index.js"
+      ],
+      "inscription/application": [
+        "./dist/inscription/application/index.js"
+      ],
+      "inscription/infra": [
+        "./dist/inscription/infra/index.js"
       ]
     }
   },
