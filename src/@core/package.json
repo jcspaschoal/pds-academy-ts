@@ -15,7 +15,10 @@
     "./@seedwork/infra": "./dist/@seedwork/infra/index.js",
     "./user/application": "./dist/user/application/index.js",
     "./user/domain": "./dist/user/domain/index.js",
-    "./user/infra": "./dist/user/infra/index.js"
+    "./user/infra": "./dist/user/infra/index.js",
+    "./admin/application": "./dist/admin/application/index.js",
+    "./admin/domain": "./dist/admin/domain/index.js",
+    "./admin/infra": "./dist/admin/infra/index.js"
   },
   "typesVersions": {
     ">=4.0": {
@@ -36,6 +39,15 @@
       ],
       "user/infra": [
         "./dist/user/infra/index.js"
+      ],
+      "admin/domain": [
+        "./dist/admin/domain/index.js"
+      ],
+      "admin/application": [
+        "./dist/admin/application/index.js"
+      ],
+      "admin/infra": [
+        "./dist/admin/infra/index.js"
       ]
     }
   },
