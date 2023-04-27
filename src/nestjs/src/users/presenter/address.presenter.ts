@@ -1,4 +1,4 @@
-import {AddressOutput} from '@pds/academy-core/src/user/application/dto';
+import {AddressOutput} from '@pds/academy-core/user/application';
 
 export class AddressPresenter {
     number: string;

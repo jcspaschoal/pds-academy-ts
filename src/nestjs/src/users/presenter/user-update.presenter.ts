@@ -1,6 +1,6 @@
 import {
   UpdateUserOutput,
-} from '@pds/academy-core/src/user/application/dto/user-output';
+} from '@pds/academy-core/user/application';
 
 export class UserUpdatePresenter {
   first_name: string;

@@ -1,7 +1,6 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
-import { ConstraintValidationError } from '@pds/academy-core/src/@seedwork/domain';
+import { ConstraintValidationError } from '@pds/academy-core/@seedwork/domain';
 import { Response } from 'express';
-import { union } from 'lodash';
 
 @Catch(ConstraintValidationError)
 export class ConstraintValidationErrorFilter implements ExceptionFilter {

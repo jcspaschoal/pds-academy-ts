@@ -1,7 +1,7 @@
 import {Inject, Injectable, UnauthorizedException} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
-import {comparePassword} from '@pds/academy-core/src/user/infra';
-import {GetUserUseCase} from '@pds/academy-core/src/user/application';
+import {comparePassword} from '@pds/academy-core/user/infra';
+import {GetUserUseCase} from '@pds/academy-core/user/application';
 import {JwtPayload} from "./types";
 
 @Injectable()

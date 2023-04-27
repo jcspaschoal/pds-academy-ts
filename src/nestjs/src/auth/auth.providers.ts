@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import {GetUserUseCase} from '@pds/academy-core/src/user/application';
-import {UserRepository} from '@pds/academy-core/src/user/domain';
-import {UserPrisma} from '@pds/academy-core/src/user/infra';
+import {GetUserUseCase} from '@pds/academy-core/user/application';
+import {UserRepository} from '@pds/academy-core/user/domain';
+import {UserPrisma} from '@pds/academy-core/user/infra';
 import {PrismaClient} from '@prisma/client';
 import {PrismaService} from '../database/prisma-service.service';
 

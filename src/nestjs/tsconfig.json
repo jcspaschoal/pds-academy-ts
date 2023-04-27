@@ -3,7 +3,10 @@
   "compilerOptions": {
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./"
+    "baseUrl": "./",
   },
-  "include": ["./src"]
+  "include": [
+    "./src",
+    "./test"
+  ]
 }

@@ -1,5 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
-import { NotFoundError } from '@pds/academy-core/src/@seedwork/domain';
+import { NotFoundError } from '@pds/academy-core/@seedwork/domain';
 import { Response } from 'express';
 import { union } from 'lodash';
 

@@ -1,4 +1,4 @@
-import { UserOutput } from '@pds/academy-core/src/user/application/dto/user-output';
+import { UserOutput } from '@pds/academy-core/user/application';
 
 
 export class UserPresenter {
