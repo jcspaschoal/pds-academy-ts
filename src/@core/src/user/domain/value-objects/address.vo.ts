@@ -1,6 +1,5 @@
-import {EntityValidationError} from "../../../@seedwork/domain/errors/validation-error";
-import {ValueObject} from "../../../@seedwork/domain";
-import {AddressValidatorFactory} from "../validators";
+import {EntityValidationError, ValueObject} from "#seedwork/domain";
+import {AddressValidatorFactory} from "#user/domain";
 
 
 export type AddressProperties = {

@@ -1,9 +1,5 @@
-import {default as DefaultUseCase} from "../../../@seedwork/application/use-case";
-import UserRepository from "../../domain/repository/user-repository";
-import {UserOutputMapper} from "../dto";
-import {User} from "../../domain";
-import {Group} from "../../domain/value-objects";
-
+import {default as DefaultUseCase} from "@seedwork/application/use-case";
+import {Group, User, UserRepository} from "#user/domain";
 
 export namespace GetUserUseCase {
     export class UseCase implements DefaultUseCase<Input, Output> {
@@ -25,9 +21,6 @@ export namespace GetUserUseCase {
     };
 
     export type Output = {
-        id: string;
-        email: string;
-        password: string;
-        group: Group;
+        id: string; email: string; password: string; group: Group;
     };
 }

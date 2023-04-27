@@ -1,15 +1,7 @@
-import {
-    IsNotEmpty,
-    IsString,
-    MaxLength,
-    IsBoolean,
-    IsOptional,
-    IsDate,
-    MinLength,
-} from "class-validator";
+import {IsDate, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength,} from "class-validator";
 
-import ClassValidatorFields from "../../../@seedwork/domain/validators/class-validator-fields";
-import {AddressProperties} from "../../domain/value-objects/address.vo";
+import ClassValidatorFields from "#seedwork/domain/validators/class-validator-fields";
+import {AddressProperties} from "#user/domain";
 
 export class AddressRules {
 

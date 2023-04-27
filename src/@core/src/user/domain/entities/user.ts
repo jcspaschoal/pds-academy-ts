@@ -1,8 +1,5 @@
-import UniqueEntityId from "../../../@seedwork/domain/value-objects/unique-entity-id.vo";
-import {EntityValidationError} from "../../../@seedwork/domain/errors/validation-error";
-import Entity from "../../../@seedwork/domain/entity/entity";
-import {UserValidatorFactory, UserValidatorTypes,} from "../validators/user.validator";
-import {Group, GroupTypes, Address, AddressProperties} from "../value-objects";
+import {Address, Group, GroupTypes, UserValidatorFactory, UserValidatorTypes,} from "#user/domain";
+import {EntityValidationError, Entity, UniqueEntityId} from "#seedwork/domain";
 
 
 export type UserProperties = {
@@ -29,7 +26,7 @@ export class User extends Entity<UserProperties> {
         User.validate(props);
         this.props.status = this.props.status ?? true;
         this.props.created_at = this.props.created_at ?? new Date();
-        this.props.group = this.props.group ?? new Group({type : GroupTypes.Student});
+        this.props.group = this.props.group ?? new Group({type: GroupTypes.Student});
         this.props.address = this.props.address ?? undefined;
 
 
@@ -37,13 +34,6 @@ export class User extends Entity<UserProperties> {
         this.last_name = this.props.last_name;
         this.email = this.props.email;
         this.password = this.props.password;
-    }
-
-    update({first_name, last_name, password}: UserUpdateProperties) {
-        User.validate({first_name, last_name, password}, "update");
-        this.first_name = first_name ?? this.first_name;
-        this.last_name = last_name ?? this.last_name;
-        this.password = password ?? this.password;
     }
 
     get first_name() {
@@ -54,12 +44,8 @@ export class User extends Entity<UserProperties> {
         this.props.first_name = value;
     }
 
-    get address(){
+    get address() {
         return this.props.address
-    }
-
-     change_address(address: Address) {
-        this.props.address = address
     }
 
     get last_name() {
@@ -86,18 +72,6 @@ export class User extends Entity<UserProperties> {
         this.props.password = value;
     }
 
-    activate() {
-        this.props.status = true;
-    }
-
-    deactivate() {
-        this.props.status = false;
-    }
-
-    private set is_active(value: boolean) {
-        this.props.status = value ?? true;
-    }
-
     get get_group() {
         return this.props.group;
     }
@@ -110,6 +84,9 @@ export class User extends Entity<UserProperties> {
         return this.props.created_at;
     }
 
+    private set is_active(value: boolean) {
+        this.props.status = value ?? true;
+    }
 
     private static validate<T>(
         props: T,
@@ -121,5 +98,24 @@ export class User extends Entity<UserProperties> {
         if (!isValid) {
             throw new EntityValidationError(classValidator.errors);
         }
+    }
+
+    update({first_name, last_name, password}: UserUpdateProperties) {
+        User.validate({first_name, last_name, password}, "update");
+        this.first_name = first_name ?? this.first_name;
+        this.last_name = last_name ?? this.last_name;
+        this.password = password ?? this.password;
+    }
+
+    change_address(address: Address) {
+        this.props.address = address
+    }
+
+    activate() {
+        this.props.status = true;
+    }
+
+    deactivate() {
+        this.props.status = false;
     }
 }

@@ -5,5 +5,4 @@ export * from "./update-user.use-case";
 export * from "./get-address.use-case";
 export * from "./create-address.use-case";
 export * from "./delete-address.use-case";
-export * from "./update-address.use-case";
 

@@ -1,9 +1,7 @@
 import {Address as AddressPrismaModel, PrismaClient, User as UserPrismaModel} from "@prisma/client";
-import {User, UserRepository as UserRepositoryContract,} from "../../../domain";
-import {EntityValidationError, LoadEntityError, NotFoundError, UniqueEntityId} from "../../../../@seedwork/domain";
-import {EmailAlreadyInUseError} from "../../../domain/errors";
+import {EntityValidationError, LoadEntityError, NotFoundError, UniqueEntityId} from "#seedwork/domain";
 import {hashPassword} from "../../utils";
-import {Address, Group} from "../../../domain/value-objects";
+import {Address, EmailAlreadyInUseError, Group, User, UserRepository as UserRepositoryContract} from "#user/domain";
 
 
 type UserPermissions = {

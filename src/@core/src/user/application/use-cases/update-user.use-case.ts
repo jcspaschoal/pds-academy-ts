@@ -1,6 +1,5 @@
-import {default as DefaultUseCase} from "../../../@seedwork/application/use-case";
-import UserRepository from "../../domain/repository/user-repository";
-import {User} from "../../domain";
+import {default as DefaultUseCase} from "@seedwork/application/use-case";
+import {User, UserRepository} from "#user/domain";
 
 export namespace UpdateUserUseCase {
     export class UseCase implements DefaultUseCase<Input, Output> {

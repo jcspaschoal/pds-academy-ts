@@ -1,7 +1,6 @@
-import {default as DefaultUseCase} from "../../../@seedwork/application/use-case";
-import UserRepository from "../../domain/repository/user-repository";
+import {default as DefaultUseCase} from "@seedwork/application/use-case";
+import {Address, UserRepository} from "#user/domain";
 import {AddressOutput} from "../dto";
-import {Address} from "../../domain/value-objects";
 
 export namespace CreateAddressUseCase {
     export class UseCase implements DefaultUseCase<Input, Output> {
@@ -19,12 +18,7 @@ export namespace CreateAddressUseCase {
     }
 
     export type Input = {
-        id: string;
-        number: string;
-        street: string;
-        description?: string;
-        postal_code: string;
-        created_at?: Date;
+        id: string; number: string; street: string; description?: string; postal_code: string; created_at?: Date;
     };
 
     export type Output = AddressOutput;

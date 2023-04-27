@@ -1,5 +1,5 @@
-import {ValueObject} from "../../../@seedwork/domain";
-import {InvalidGroupError} from "../../../user/domain/errors";
+import {ValueObject} from "#seedwork/domain";
+import {InvalidGroupError} from "#user/domain";
 
 export enum GroupTypes {
     Student = 1,
@@ -14,13 +14,13 @@ export type GroupProperties = {
 }
 
 export class Group extends ValueObject<GroupProperties> {
-     constructor(value: GroupProperties) {
+    constructor(value: GroupProperties) {
         super(value);
     }
 
     private validate() {
         const isValid = this.value.type === GroupTypes.Teacher || GroupTypes.Admin || GroupTypes.Student;
-        if(!isValid) {
+        if (!isValid) {
             throw new InvalidGroupError(this.value.type)
         }
     }

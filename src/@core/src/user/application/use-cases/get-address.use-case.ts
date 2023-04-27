@@ -1,7 +1,6 @@
-import {default as DefaultUseCase} from "../../../@seedwork/application/use-case";
-import UserRepository from "../../domain/repository/user-repository";
+import {default as DefaultUseCase} from "@seedwork/application/use-case";
+import {UserRepository} from "#user/domain";
 import {AddressOutput} from "../dto";
-import {Address} from "../../domain/value-objects";
 
 export namespace GetAddressUseCase {
     export class UseCase implements DefaultUseCase<Input, Output> {

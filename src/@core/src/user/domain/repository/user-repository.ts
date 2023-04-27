@@ -2,10 +2,9 @@ import {
     SearchableRepositoryInterface,
     SearchParams as DefaultSearchParams,
     SearchResult as DefaultSearchResult,
-} from "../../../@seedwork/domain";
+} from "#seedwork/domain";
 import {User} from "../entities";
-import {Address} from '../value-objects'
-import UniqueEntityId from "../../../@seedwork/domain/value-objects/unique-entity-id.vo";
+import UniqueEntityId from "@seedwork/domain/value-objects/unique-entity-id.vo";
 
 export namespace UserRepository {
     export type Filter = string;

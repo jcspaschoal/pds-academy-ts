@@ -1,19 +1,6 @@
-import {
-    IsNotEmpty,
-    IsString,
-    MaxLength,
-    IsBoolean,
-    IsOptional,
-    IsDate,
-    MinLength,
-    IsEnum
-} from "class-validator";
-import {
-    User,
-    UserProperties,
-    UserUpdateProperties,
-} from "../entities/user";
-import ClassValidatorFields from "../../../@seedwork/domain/validators/class-validator-fields";
+import {IsBoolean, IsDate, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength} from "class-validator";
+import {UserProperties, UserUpdateProperties,} from "#user/domain";
+import ClassValidatorFields from "#seedwork/domain/validators/class-validator-fields";
 
 export class UserRules {
     @MaxLength(100)
