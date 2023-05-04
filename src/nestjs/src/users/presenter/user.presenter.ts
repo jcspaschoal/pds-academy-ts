@@ -1,6 +1,5 @@
 import { UserOutput } from '@pds/academy-core/user/application';
 
-
 export class UserPresenter {
   id: string;
   first_name: string;
@@ -16,4 +15,3 @@ export class UserPresenter {
     this.created_at = userOutput.created_at;
   }
 }
-
