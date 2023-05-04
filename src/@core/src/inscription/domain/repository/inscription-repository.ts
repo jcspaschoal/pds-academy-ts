@@ -2,6 +2,7 @@ import {
     SearchableRepositoryInterface,
     SearchParams as DefaultSearchParams,
     SearchResult as DefaultSearchResult,
+    UniqueEntityId,
 } from "#seedwork/domain";
 import {Inscription} from "#inscription/domain/entities";
 
@@ -22,7 +23,7 @@ export namespace InscriptionRepository {
             SearchParams,
             SearchResult
         > {
-
+        updateFilePath(id: UniqueEntityId | string, path: string)
     }
 }
 

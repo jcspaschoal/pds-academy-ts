@@ -9,8 +9,8 @@ generator client {
 }
 
 model Permission {
-  id_permission     Int                 @id @default(autoincrement())
-  name              String              @unique @db.VarChar(45)
+  id_permission     Int                  @id @default(autoincrement())
+  name              String               @unique @db.VarChar(45)
   GroupHasPermssion GroupHasPermission[]
 }
 
@@ -24,10 +24,10 @@ model GroupHasPermission {
 }
 
 model Group {
-  id_group          Int                 @id @default(autoincrement())
-  name              String              @db.VarChar(45)
+  id_group           Int                  @id @default(autoincrement())
+  name               String               @db.VarChar(45)
   GroupHasPermission GroupHasPermission[]
-  users             User[]
+  users              User[]
 }
 
 model User {
@@ -52,7 +52,7 @@ model User {
 }
 
 model Address {
-  id_addres   Int       @id @default(autoincrement())
+  id_address  Int       @id @default(autoincrement())
   user        User      @relation(fields: [user_id], references: [id_user])
   user_id     String    @unique @db.Uuid
   number      String    @db.VarChar(45)
@@ -70,7 +70,7 @@ enum InscriptionStatus {
 }
 
 model Inscription {
-  id_inscription      Int                   @id @default(autoincrement())
+  id_inscription      String                @id @default(uuid()) @db.Uuid
   user                User                  @relation(fields: [user_id], references: [id_user])
   user_id             String                @unique @db.Uuid
   document_path       String                @db.VarChar(200)
@@ -82,9 +82,10 @@ model Inscription {
 
 model InscriptionHasAdmin {
   user_id        String      @db.Uuid
-  inscription_id Int
+  inscription_id String      @db.Uuid
   inscription    Inscription @relation(fields: [inscription_id], references: [id_inscription])
   user           User        @relation(fields: [user_id], references: [id_user])
+  created_at     DateTime    @default(now()) @db.Timestamp()
 
   @@id([inscription_id, user_id])
 }

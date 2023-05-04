@@ -8,7 +8,6 @@ export class DocumentRules {
     @MinLength(40)
     @IsString()
     @IsNotEmpty()
-    @Matches(/^PDF_([a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})_(.+)\.pdf$/i)
     pathToDocument: string;
 
     constructor(pathToDocument: DocumentProps) {

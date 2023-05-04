@@ -1,9 +1,11 @@
 import {Entity, UniqueEntityId} from "#seedwork/domain";
-import {InscriptionStatus, Status} from "#inscription/domain/value-objects";
+import {InscriptionStatus, Status, Document} from "#inscription/domain/value-objects";
 
 export type InscriptionProps = {
     userId: UniqueEntityId | string
-    document?: Document; status: InscriptionStatus; created_at: Date;
+    document: Document;
+    status?: InscriptionStatus;
+    created_at?: Date;
 }
 
 export class Inscription extends Entity<InscriptionProps> {
@@ -11,7 +13,7 @@ export class Inscription extends Entity<InscriptionProps> {
     constructor(public readonly props: InscriptionProps, id?: UniqueEntityId) {
         super(props, id);
         this.props.created_at = this.props.created_at ?? new Date();
-        this.status = this.props.status
+        this.status = this.props.status ?? new InscriptionStatus({name: Status.Pendent})
         this.document = this.props.document
     }
 
@@ -35,7 +37,7 @@ export class Inscription extends Entity<InscriptionProps> {
         this.props.status = status
     }
 
-    private set uploadDocument(document: Document) {
+    public uploadDocument(document: Document) {
         this.document = document;
     }
 
@@ -43,8 +45,8 @@ export class Inscription extends Entity<InscriptionProps> {
         this.status = new InscriptionStatus({name: Status.Approved})
     }
 
-    public changeStatusToDenny() {
-        this.status = new InscriptionStatus({name: Status.Denny})
+    public changeStatusToDenied() {
+        this.status = new InscriptionStatus({name: Status.Denied})
     }
 
 }

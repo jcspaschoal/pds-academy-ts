@@ -1,8 +1,8 @@
 import {ValueObject} from "#seedwork/domain";
-import {InvalidInscriptionStatus} from "#admin/domain/errors";
+import {InvalidInscriptionStatus} from "#inscription/domain";
 
 export enum Status {
-    Denny = 'denny', Approved = 'approved', Pendent = 'pendent'
+    Denied = 'Denied', Approved = 'Approved', Pendent = 'Pendent'
 }
 
 export type InscriptionStatusProps = {
@@ -15,7 +15,7 @@ export class InscriptionStatus extends ValueObject<InscriptionStatusProps> {
     }
 
     private validate() {
-        const isValid = this.value.name === Status.Denny || Status.Approved || Status.Pendent;
+        const isValid = this.value.name === Status.Denied || Status.Approved || Status.Pendent;
         if (!isValid) {
             throw new InvalidInscriptionStatus(this.value.name)
         }

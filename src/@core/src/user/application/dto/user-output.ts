@@ -1,4 +1,4 @@
-import { User } from "../../domain/entities";
+import { User } from "#user/domain";
 
 export type UserOutput = {
   id?: string;

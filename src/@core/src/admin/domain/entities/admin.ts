@@ -24,7 +24,7 @@ export class Admin extends Entity<AdminProps> {
     }
 
     dennyInscription(inscription: Inscription) {
-        inscription.changeStatusToDenny()
+        inscription.changeStatusToDenied()
     }
 
 }

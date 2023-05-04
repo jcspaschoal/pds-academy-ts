@@ -222,7 +222,7 @@ export namespace UserPrisma {
                 }
 
                 if (addressModel) {
-                    const {id_addres, ...addressData} = addressModel;
+                    const {id_address, ...addressData} = addressModel;
                     userData.address = new Address(addressData);
                 }
 
