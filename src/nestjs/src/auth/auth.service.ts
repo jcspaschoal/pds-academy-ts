@@ -19,6 +19,7 @@ export class AuthService {
     const payload: JwtPayload = {
       sub: user.id,
       permissions: user.group.value.permissions,
+      roles: [user.group.getRole()],
     };
     return {
       access_token: await this.jwtService.signAsync(payload),

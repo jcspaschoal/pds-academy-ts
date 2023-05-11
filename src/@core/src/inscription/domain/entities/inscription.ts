@@ -1,11 +1,9 @@
 import {Entity, UniqueEntityId} from "#seedwork/domain";
-import {InscriptionStatus, Status, Document} from "#inscription/domain/value-objects";
+import {Document, InscriptionStatus, Status} from "#inscription/domain";
 
 export type InscriptionProps = {
     userId: UniqueEntityId | string
-    document: Document;
-    status?: InscriptionStatus;
-    created_at?: Date;
+    document?: Document; status?: InscriptionStatus; created_at?: Date;
 }
 
 export class Inscription extends Entity<InscriptionProps> {
@@ -13,8 +11,9 @@ export class Inscription extends Entity<InscriptionProps> {
     constructor(public readonly props: InscriptionProps, id?: UniqueEntityId) {
         super(props, id);
         this.props.created_at = this.props.created_at ?? new Date();
-        this.status = this.props.status ?? new InscriptionStatus({name: Status.Pendent})
+        this.status = this.props.status ?? new InscriptionStatus(Status.Pendent)
         this.document = this.props.document
+        this.userId = this.props.userId
     }
 
     get document() {
@@ -27,6 +26,10 @@ export class Inscription extends Entity<InscriptionProps> {
 
     get userId() {
         return this.props.userId
+    }
+
+    private set userId(userId: string | UniqueEntityId) {
+        this.props.userId = userId
     }
 
     get status() {
@@ -42,12 +45,11 @@ export class Inscription extends Entity<InscriptionProps> {
     }
 
     public changeStatusToApproved() {
-        this.status = new InscriptionStatus({name: Status.Approved})
+        this.status = new InscriptionStatus(Status.Approved)
     }
 
     public changeStatusToDenied() {
-        this.status = new InscriptionStatus({name: Status.Denied})
+        this.status = new InscriptionStatus(Status.Denied)
     }
-
 }
 

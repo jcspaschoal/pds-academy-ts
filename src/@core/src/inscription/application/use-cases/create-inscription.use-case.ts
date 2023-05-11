@@ -1,5 +1,5 @@
 import {default as DefaultUseCase} from "@seedwork/application/use-case";
-import {InscriptionOutputDto, InscriptionOutputMapper} from "../dto";
+import {InscriptionOutputDto} from "../dto";
 import {Document, Inscription, InscriptionRepository} from "#inscription/domain";
 
 export namespace CreateInscriptionUseCase {
@@ -11,10 +11,9 @@ export namespace CreateInscriptionUseCase {
             const entity = new Inscription({
                 userId: input.userId, document: new Document({pathToDocument: input.documentPath})
             });
-            await this.inscriptionRepository.insert(entity);
-            return InscriptionOutputMapper.toOutput(entity);
+            const idInscription = await this.inscriptionRepository.upsert(entity);
+            return {id: idInscription, status: entity.status};
         }
-
     }
 
     export type Input = {

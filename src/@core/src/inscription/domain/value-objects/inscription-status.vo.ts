@@ -5,19 +5,16 @@ export enum Status {
     Denied = 'Denied', Approved = 'Approved', Pendent = 'Pendent'
 }
 
-export type InscriptionStatusProps = {
-    name: Status
-}
 
-export class InscriptionStatus extends ValueObject<InscriptionStatusProps> {
-    constructor(value: InscriptionStatusProps) {
+export class InscriptionStatus extends ValueObject<Status> {
+    constructor(value: Status) {
         super(value);
     }
 
     private validate() {
-        const isValid = this.value.name === Status.Denied || Status.Approved || Status.Pendent;
+        const isValid = this.value === Status.Denied || Status.Approved || Status.Pendent;
         if (!isValid) {
-            throw new InvalidInscriptionStatus(this.value.name)
+            throw new InvalidInscriptionStatus(this.value)
         }
     }
 

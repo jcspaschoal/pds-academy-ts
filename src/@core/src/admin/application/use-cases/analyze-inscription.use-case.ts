@@ -1,6 +1,6 @@
 import {default as DefaultUseCase} from "@seedwork/application/use-case";
 import {AdminRepository} from "#admin/domain";
-import {Document, InscriptionRepository, InscriptionStatus, Status} from "#inscription/domain";
+import {InscriptionRepository} from "#inscription/domain";
 
 
 export namespace AnalyzeInscriptionUseCase {

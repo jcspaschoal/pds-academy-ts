@@ -10,6 +10,9 @@ import { join, extname } from 'path';
 @Injectable()
 export class FileService {
   async upload(file: Express.Multer.File, userId: string): Promise<string> {
+    if (!file) {
+      throw new BadRequestException('File is mandatory');
+    }
     const allowedExtensions = ['.pdf', '.docx'];
     const fileExt = extname(file.originalname);
     if (!allowedExtensions.includes(fileExt)) {
@@ -39,4 +42,9 @@ export class FileService {
     }
     return join(__dirname, '..', '..', '..', 'files', matchingFileName);
   }
+
+  async getInscriptionFileByUserID() {
+
+  }
+
 }

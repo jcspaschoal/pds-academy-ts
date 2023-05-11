@@ -5,9 +5,7 @@ import {Address, EmailAlreadyInUseError, Group, User, UserRepository as UserRepo
 
 
 type UserPermissions = {
-    permission_names: string[],
-    role?: string,
-    group_id: number
+    permission_names: string[], role?: string, group_id: number
 }
 
 export namespace UserPrisma {
@@ -17,9 +15,7 @@ export namespace UserPrisma {
         constructor(private prisma: PrismaClient) {
         }
 
-        async search(
-            props: UserRepositoryContract.SearchParams
-        ): Promise<UserRepositoryContract.SearchResult> {
+        async search(props: UserRepositoryContract.SearchParams): Promise<UserRepositoryContract.SearchResult> {
             throw new Error("Method not implemented.");
         }
 
@@ -55,8 +51,7 @@ export namespace UserPrisma {
                     }
                 })
                 const permissions: UserPermissions = {
-                    group_id: existingUser.group_id,
-                    permission_names: []
+                    group_id: existingUser.group_id, permission_names: []
                 }
 
                 return UserModelMapper.toEntity(existingUser, permissions);
@@ -72,8 +67,7 @@ export namespace UserPrisma {
                 const existingUser = await this.prisma.user.findUniqueOrThrow({
                     where: {
                         email: email
-                    },
-                    include: {
+                    }, include: {
                         group: {
                             select: {
                                 GroupHasPermission: {
@@ -116,11 +110,9 @@ export namespace UserPrisma {
                 where: {
                     id_user: entity.id,
 
-                },
-                include: {
+                }, include: {
                     address: true
-                },
-                data: {
+                }, data: {
                     first_name: entity.first_name,
                     last_name: entity.last_name,
                     password: await hashPassword(entity.password),
@@ -134,8 +126,7 @@ export namespace UserPrisma {
                 where: {
                     user_id: entity.id,
 
-                },
-                data: {
+                }, data: {
                     street: entity.address.value.street,
                     number: entity.address.value.number,
                     description: entity.address.value.description,
@@ -148,15 +139,13 @@ export namespace UserPrisma {
             const address = await this.prisma.address.upsert({
                 where: {
                     user_id: entity.id
-                },
-                create: {
+                }, create: {
                     street: entity.address.value.street,
                     number: entity.address.value.number,
                     description: entity.address.value.description,
                     postal_code: entity.address.value.postal_code,
                     user_id: entity.id
-                },
-                update: {
+                }, update: {
                     street: entity.address.value.street,
                     number: entity.address.value.number,
                     description: entity.address.value.description,
@@ -183,32 +172,27 @@ export namespace UserPrisma {
         async getAddress(id: string | UniqueEntityId): Promise<User> {
             const idValue = id instanceof UniqueEntityId ? id.id : id;
 
-            try {
-                const existingUser = await this.prisma.user.findUniqueOrThrow({
-                    where: {
-                        id_user: idValue
-                    },
-                    include: {address: true}
-                })
+            const existingAddress = await this.prisma.address.findFirst({
+                where: {
+                    user_id: idValue
+                }, include: {
+                    user: true
+                }
+            })
 
-                const address = existingUser?.address || undefined
-
-                return UserModelMapper.toEntity(existingUser, undefined, address)
-
-
-            } catch (error) {
-                // User not found, handle the error
-                throw new NotFoundError(`Failed to find user`);
+            if (!existingAddress) {
+                throw new NotFoundError("Address does not exists")
             }
+
+            const existingUser = existingAddress?.user || undefined
+
+            return UserModelMapper.toEntity(existingUser, undefined, existingAddress)
+
         }
     }
 
     export class UserModelMapper {
-        static toEntity(
-            model: UserPrismaModel,
-            userPermissions?: UserPermissions,
-            addressModel?: AddressPrismaModel
-        ) {
+        static toEntity(model: UserPrismaModel, userPermissions?: UserPermissions, addressModel?: AddressPrismaModel) {
             try {
 
                 const {id_user, ...otherData} = model;
@@ -216,8 +200,7 @@ export namespace UserPrisma {
 
                 if (userPermissions) {
                     userData.group = new Group({
-                        type: userPermissions.group_id,
-                        permissions: userPermissions.permission_names
+                        type: userPermissions.group_id, permissions: userPermissions.permission_names
                     });
                 }
 

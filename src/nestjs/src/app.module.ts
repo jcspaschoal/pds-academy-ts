@@ -8,7 +8,6 @@ import { ConfigModule } from './config/config.module';
 import { AuthModule } from './auth/auth.module';
 import { CourseModule } from './course/course.module';
 import { ExamModule } from './exam/exam.module';
-import { AdminModule } from './admin/admin.module';
 import { InscriptionModule } from './inscription/inscription.module';
 
 @Module({
@@ -20,7 +19,6 @@ import { InscriptionModule } from './inscription/inscription.module';
     AuthModule,
     CourseModule,
     ExamModule,
-    AdminModule,
     InscriptionModule,
   ],
   controllers: [AppController],

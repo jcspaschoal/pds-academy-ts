@@ -3,19 +3,33 @@ import {InvalidGroupError} from "#user/domain";
 
 export enum GroupTypes {
     Student = 1,
-    Teacher,
     Admin,
+    Teacher,
 }
 
 export type GroupProperties = {
     type: GroupTypes
-    role?: string
     permissions?: string[]
 }
 
 export class Group extends ValueObject<GroupProperties> {
     constructor(value: GroupProperties) {
         super(value);
+    }
+
+    public getRole() {
+        if(this.value.type === GroupTypes.Teacher) {
+            return "teacher"
+        }
+
+        if(this.value.type === GroupTypes.Admin) {
+            return "admin"
+        }
+
+        if(this.value.type === GroupTypes.Student) {
+            return "student"
+        }
+
     }
 
     private validate() {

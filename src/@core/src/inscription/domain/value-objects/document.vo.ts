@@ -1,5 +1,5 @@
 import {ValueObject, ValueObjectValidationError} from "#seedwork/domain";
-import {DocumentValidatorFactory} from "#inscription/domain/validators";
+import {DocumentValidatorFactory} from "#inscription/domain";
 
 export type DocumentProps = {
     pathToDocument: string;

@@ -5,13 +5,16 @@
   "main": "index.js",
   "imports": {
     "#seedwork/domain": "./dist/@seedwork/domain/index.js",
+    "#seedwork/application": "./dist/@seedwork/application/index.js",
     "#seedwork/*": "./dist/@seedwork/*.js",
     "#user/domain": "./dist/user/domain/index.js",
     "#user/*": "./dist/user/*.js",
-    "#admin/*": "./dist/admin/*js",
+    "#admin/*": "./dist/admin/*.js",
     "#admin/domain": "./dist/admin/domain/index.js",
-    "#inscription/*": "./dist/infra/*js",
-    "#inscription/domain": "./dist/infra/domain/index.js"
+    "#inscription/*": "./dist/inscription/*.js",
+    "#inscription/domain": "./dist/inscription/domain/index.js",
+    "#inscription/application": "./dist/inscription/application/index.js"
+
   },
   "exports": {
     "./@seedwork/application": "./dist/@seedwork/application/index.js",
@@ -39,31 +42,31 @@
         "./dist/@seedwork/infra/index.d.ts"
       ],
       "user/domain": [
-        "./dist/user/domain/index.js"
+        "./dist/user/domain/index.d.ts"
       ],
       "user/application": [
-        "./dist/user/application/index.js"
+        "./dist/user/application/index.d.ts"
       ],
       "user/infra": [
-        "./dist/user/infra/index.js"
+        "./dist/user/infra/index.d.ts"
       ],
       "admin/domain": [
-        "./dist/admin/domain/index.js"
+        "./dist/admin/domain/index.d.ts"
       ],
       "admin/application": [
-        "./dist/admin/application/index.js"
+        "./dist/admin/application/index.d.ts"
       ],
       "admin/infra": [
-        "./dist/admin/infra/index.js"
+        "./dist/admin/infra/index.d.ts"
       ],
       "inscription/domain": [
-        "./dist/inscription/domain/index.js"
+        "./dist/inscription/domain/index.d.ts"
       ],
       "inscription/application": [
-        "./dist/inscription/application/index.js"
+        "./dist/inscription/application/index.d.ts"
       ],
       "inscription/infra": [
-        "./dist/inscription/infra/index.js"
+        "./dist/inscription/infra/index.d.ts"
       ]
     }
   },
@@ -95,11 +98,13 @@
   },
   "dependencies": {
     "@prisma/client": "^4.12.0",
+    "@types/multer": "^1.4.7",
     "bcrypt": "^5.1.0",
     "chance": "^1.1.11",
     "class-validator": "^0.14.0",
     "dotenv": "^16.0.3",
     "install": "^0.13.0",
+    "multer": "^1.4.5-lts.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.30.0",
     "uuid": "^9.0.0"

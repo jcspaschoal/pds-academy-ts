@@ -18,6 +18,7 @@ export namespace AdminRepository {
 
     export interface Repository extends SearchableRepositoryInterface<Admin, Filter, SearchParams, SearchResult> {
         createInscriptionEntry(userId: string | UniqueEntityId, inscriptionId: string | UniqueEntityId)
+        bulkStatusUpdate(userId: string[] | UniqueEntityId[])
     }
 }
 

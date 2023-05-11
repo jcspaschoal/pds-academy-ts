@@ -10,7 +10,7 @@ export class DocumentRules {
     @IsNotEmpty()
     pathToDocument: string;
 
-    constructor(pathToDocument: DocumentProps) {
+    constructor({pathToDocument}: DocumentProps) {
         Object.assign(this, {pathToDocument});
     }
 }

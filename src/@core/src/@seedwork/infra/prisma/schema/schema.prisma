@@ -44,8 +44,6 @@ model User {
   inscription         Inscription?
   address             Address?
   courses             Course[]
-  commentary          Commentary[]
-  rating              Rating[]
   userHasCourse       UserHasCourse[]
   userHasExam         UserHasExam[]
   inscriptionHasAdmin InscriptionHasAdmin[]
@@ -87,7 +85,7 @@ model InscriptionHasAdmin {
   user           User        @relation(fields: [user_id], references: [id_user])
   created_at     DateTime    @default(now()) @db.Timestamp()
 
-  @@id([inscription_id, user_id])
+  @@id([inscription_id, user_id, created_at])
 }
 
 model UserHasExam {
@@ -193,24 +191,4 @@ model Lesson {
   created_at   DateTime     @default(now()) @db.Timestamp()
   updated_at   DateTime?    @updatedAt @db.Timestamp()
   courseModule CourseModule @relation(fields: [module_id], references: [id_module])
-}
-
-model Commentary {
-  id_commentary String    @id @default(uuid()) @db.Uuid
-  user_id       String    @db.Uuid
-  course_id     String    @db.Uuid
-  text          String    @db.VarChar(400)
-  created_at    DateTime  @default(now()) @db.Timestamp()
-  updated_at    DateTime? @updatedAt @db.Timestamp()
-  User          User      @relation(fields: [user_id], references: [id_user])
-}
-
-model Rating {
-  id_rating  String    @id @default(uuid()) @db.Uuid
-  user_id    String    @unique @db.Uuid
-  course_id  String    @db.Uuid
-  rating     Decimal   @db.Decimal(3, 2)
-  created_at DateTime  @default(now()) @db.Timestamp()
-  updated_at DateTime? @updatedAt @db.Timestamp()
-  user       User      @relation(fields: [user_id], references: [id_user])
 }

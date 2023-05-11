@@ -1,6 +1,6 @@
 import {default as DefaultUseCase} from "@seedwork/application/use-case";
 import {InscriptionOutputDto, InscriptionOutputMapper} from "../dto";
-import {Document, Inscription, InscriptionRepository} from "#inscription/domain";
+import {InscriptionRepository} from "#inscription/domain";
 
 export namespace GetInscriptionUseCase {
     export class UseCase implements DefaultUseCase<Input, Output> {
@@ -11,7 +11,6 @@ export namespace GetInscriptionUseCase {
             const entity = await this.inscriptionRepository.findById(input.userId);
             return InscriptionOutputMapper.toOutput(entity);
         }
-
     }
 
     export type Input = {
