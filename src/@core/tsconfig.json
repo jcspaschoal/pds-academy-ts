@@ -12,6 +12,9 @@
       "#admin/*": [
         "./admin/*"
       ],
+      "#exam/*": [
+        "./exam/*"
+      ],
       "#inscription/*": [
         "./inscription/*"
       ]
