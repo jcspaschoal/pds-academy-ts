@@ -1,6 +1,6 @@
 export class CreateAddressDto {
-    number: string;
-    street: string;
-    description?: string;
-    postal_code: string;
+  number: string;
+  street: string;
+  description?: string;
+  postal_code: string;
 }
