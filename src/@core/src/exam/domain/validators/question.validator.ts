@@ -7,7 +7,6 @@ export class QuestionValidatorRules {
 
     @IsNotEmpty()
     @Min(1)
-    @Max(10)
     @IsNumber()
     questionNumber: number;
 

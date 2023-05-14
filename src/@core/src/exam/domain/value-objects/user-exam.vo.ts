@@ -1,11 +1,12 @@
-import {AnsweredQuestion} from "./answered-question.vo";
+import {AnsweredQuestion} from "#exam/domain";
 import {ValueObject, ValueObjectValidationError} from "#seedwork/domain";
-import {UserExamValidatorFactory} from "../validators";
+import {UserExamValidatorFactory} from "#exam/domain";
 
 
 export type UserExamProps = {
     userId: string;
-    examId: string;
+    examId: number;
+    examUUID: string;
     examDate: Date;
     answeredQuestions: AnsweredQuestion[];
     score: number;

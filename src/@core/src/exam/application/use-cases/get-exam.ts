@@ -1,6 +1,6 @@
 import {default as DefaultUseCase} from "@seedwork/application/use-case";
 import {ExamRepository} from "#exam/domain";
-import {ExamOutputDto, ExamOutputMapper} from "#exam/application";
+import {ExamOutputDto, ExamOutputMapper} from "../dto";
 
 
 export namespace GetExam {

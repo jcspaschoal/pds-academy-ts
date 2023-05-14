@@ -1,6 +1,6 @@
 import {default as DefaultUseCase} from "@seedwork/application/use-case";
 import {ExamRepository} from "#exam/domain";
-import {UserExamOutputDto, UserExamOutputMapper} from "#exam/application";
+import {UserExamOutputDto, UserExamOutputMapper} from "../dto";
 
 
 export namespace GetLastUserExam {

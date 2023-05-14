@@ -1,9 +1,11 @@
 import {Entity, UniqueEntityId} from "#seedwork/domain";
-import {AnsweredQuestion, Question, UserExam} from "../value-objects";
+import {AnsweredQuestion, Question, UserExam} from "#exam/domain";
 
 
 export type ExamProps = {
+    exam_numeric_id: number;
     questions: Question[];
+    created_at?: Date
 }
 
 
@@ -12,6 +14,7 @@ export class Exam extends Entity<ExamProps> {
 
     constructor(public readonly props: ExamProps, id?: UniqueEntityId) {
         super(props, id);
+        this.props.created_at = this.props.created_at ?? new Date();
         this.populateQuestionsAnswersDictionary();
     }
 
@@ -27,11 +30,13 @@ export class Exam extends Entity<ExamProps> {
             }
         )
 
-        const userScore = totalOfRightAnswers / totalQuestions
+        const userScore = (totalOfRightAnswers / totalQuestions) * 100
+
 
         return new UserExam({
             userId: userId,
-            examId: this.id,
+            examId: this.props.exam_numeric_id,
+            examUUID: this.id,
             examDate: new Date(),
             answeredQuestions: userAnswers,
             score: userScore

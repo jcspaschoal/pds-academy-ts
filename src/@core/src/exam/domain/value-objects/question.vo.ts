@@ -1,5 +1,5 @@
 import {ValueObject, ValueObjectValidationError} from "#seedwork/domain";
-import {QuestionValidatorFactory} from "../validators";
+import {QuestionValidatorFactory} from "#exam/domain";
 
 export type QuestionProps = {
     questionNumber: number;

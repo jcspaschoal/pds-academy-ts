@@ -1,6 +1,6 @@
 import {default as DefaultUseCase} from "@seedwork/application/use-case";
-import {AnsweredQuestion, ExamRepository} from "#exam/domain";
-import {UserExamOutputDto, UserExamOutputMapper} from "#exam/application";
+import {AnsweredQuestion, AnsweredQuestionProps, ExamRepository} from "#exam/domain";
+import {UserExamOutputDto, UserExamOutputMapper} from "../dto";
 
 
 export namespace CreateUserExamUseCase {
@@ -12,7 +12,13 @@ export namespace CreateUserExamUseCase {
 
         async execute(input: Input): Promise<Output> {
             const exam = await this.examRepository.getExamByExamUUID(input.examId)
-            const userExam = await exam.calculateExamScore(input.answeredQuestions, input.userId)
+            const questions = input.answeredQuestions.map((question) => {
+                return new AnsweredQuestion({
+                    questionAnswer: question.questionAnswer,
+                    questionNumber: question.questionNumber
+                })
+            })
+            const userExam = await exam.calculateExamScore(questions, input.userId)
             await this.examRepository.submitUserExam(userExam)
             return UserExamOutputMapper.toOutput(userExam)
         }
@@ -23,7 +29,7 @@ export namespace CreateUserExamUseCase {
     export type Input = {
         userId: string;
         examId: string;
-        answeredQuestions: AnsweredQuestion[];
+        answeredQuestions: AnsweredQuestionProps[];
     };
     export type Output = UserExamOutputDto
 }

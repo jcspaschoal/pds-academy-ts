@@ -1,7 +1,6 @@
-import {AnsweredQuestion, AnsweredQuestionProps, UserExamProps} from "../value-objects";
-import {IsDate, IsNotEmpty, IsNumber, IsUUID, ValidateNested} from "class-validator";
+import {AnsweredQuestion, UserExamProps} from "#exam/domain";
+import {IsDate, IsNotEmpty, IsNumber, IsUUID} from "class-validator";
 import {ClassValidatorFields} from "#seedwork/domain";
-import {AnsweredQuestionValidatorRules} from "./answered-question.validator";
 
 
 export class UserExamValidatorRules {
@@ -11,9 +10,9 @@ export class UserExamValidatorRules {
     @IsNotEmpty()
     userId: string;
 
-    @IsUUID("4")
     @IsNotEmpty()
-    examId: string;
+    @IsNumber()
+    examId: number;
 
     @IsNumber()
     @IsNotEmpty()
@@ -26,7 +25,7 @@ export class UserExamValidatorRules {
     @IsNotEmpty()
     answeredQuestions: AnsweredQuestion[];
 
-    constructor({userId, examId,score , examDate, answeredQuestions}: UserExamProps) {
+    constructor({userId, examId, score, examDate, answeredQuestions}: UserExamProps) {
         Object.assign(this, {userId, examId, score, examDate, answeredQuestions})
     }
 

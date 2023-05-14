@@ -55,6 +55,15 @@
       "user/infra": [
         "./dist/user/infra/index.d.ts"
       ],
+      "exam/domain": [
+        "./dist/exam/domain/index.d.ts"
+      ],
+      "exam/application": [
+        "./dist/exam/application/index.d.ts"
+      ],
+      "exam/infra": [
+        "./dist/exam/infra/index.d.ts"
+      ],
       "admin/domain": [
         "./dist/admin/domain/index.d.ts"
       ],
