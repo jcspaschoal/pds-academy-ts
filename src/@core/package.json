@@ -15,8 +15,9 @@
     "#admin/domain": "./dist/admin/domain/index.js",
     "#inscription/*": "./dist/inscription/*.js",
     "#inscription/domain": "./dist/inscription/domain/index.js",
-    "#inscription/application": "./dist/inscription/application/index.js"
-
+    "#inscription/application": "./dist/inscription/application/index.js",
+    "#course/domain": "./dist/course/domain/index.js",
+    "#course/application": "./dist/course/application/index.js"
   },
   "exports": {
     "./@seedwork/application": "./dist/@seedwork/application/index.js",
@@ -33,7 +34,10 @@
     "./admin/infra": "./dist/admin/infra/index.js",
     "./inscription/application": "./dist/inscription/application/index.js",
     "./inscription/domain": "./dist/inscription/domain/index.js",
-    "./inscription/infra": "./dist/inscription/infra/index.js"
+    "./inscription/infra": "./dist/inscription/infra/index.js",
+    "./course/application": "./dist/course/application/index.js",
+    "./course/domain": "./dist/course/domain/index.js",
+    "./course/infra": "./dist/course/infra/index.js"
   },
   "typesVersions": {
     ">=4.0": {
@@ -81,6 +85,15 @@
       ],
       "inscription/infra": [
         "./dist/inscription/infra/index.d.ts"
+      ],
+      "course/domain": [
+        "./dist/course/domain/index.d.ts"
+      ],
+      "course/application": [
+        "./dist/course/application/index.d.ts"
+      ],
+      "course/infra": [
+        "./dist/course/infra/index.d.ts"
       ]
     }
   },

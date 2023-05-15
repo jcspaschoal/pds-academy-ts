@@ -97,12 +97,12 @@ model UserHasExam {
   user      User     @relation(fields: [user_id], references: [id_user])
   exam      Exam     @relation(fields: [exam_id], references: [id_exam])
 
-  @@id([user_id, exam_id])
+  @@id([user_id, exam_id, exam_date])
 }
 
 model Exam {
   id_exam         Int               @id @default(autoincrement())
-  id_uuid_exam    String            @unique @db.Uuid @default(uuid())
+  id_uuid_exam    String            @unique @default(uuid()) @db.Uuid
   created_at      DateTime          @default(now()) @db.Timestamp()
   userHasExam     UserHasExam[]
   examHasQuestion ExamHasQuestion[]
@@ -148,12 +148,13 @@ model CategoryHasCourse {
 }
 
 model UserHasCourse {
-  course_id String @db.Uuid
-  user_id   String @db.Uuid
-  User      User   @relation(fields: [user_id], references: [id_user])
-  Course    Course @relation(fields: [course_id], references: [id_course])
+  course_id  String   @db.Uuid
+  user_id    String   @db.Uuid
+  User       User     @relation(fields: [user_id], references: [id_user])
+  Course     Course   @relation(fields: [course_id], references: [id_course])
+  created_at DateTime @default(now()) @db.Timestamp()
 
-  @@id([course_id, user_id])
+  @@id([course_id, user_id, created_at])
 }
 
 model Course {
@@ -171,7 +172,7 @@ model Course {
 }
 
 model CourseModule {
-  id_module   Int       @id @default(autoincrement())
+  id_module   String    @id @default(uuid()) @db.Uuid
   course_id   String    @db.Uuid
   name        String    @db.VarChar(255)
   order       Int
@@ -183,9 +184,9 @@ model CourseModule {
 }
 
 model Lesson {
-  id_lesson    Int          @id @default(autoincrement())
-  module_id    Int
-  lesson_order        Int
+  id_lesson    String       @id @default(uuid()) @db.Uuid
+  module_id    String       @db.Uuid
+  lesson_order Int
   name         String       @db.VarChar(255)
   description  String?      @db.VarChar(400)
   video_url    String?      @db.VarChar(255)

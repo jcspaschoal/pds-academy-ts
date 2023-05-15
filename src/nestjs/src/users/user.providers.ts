@@ -15,6 +15,7 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaService } from '../database/prisma-service.service';
 
 export namespace USER_PROVIDERS {
+
   export namespace REPOSITORIES {
     export const USER_PRISMA_REPOSITORY = {
       provide: 'UserPrismaRepository',

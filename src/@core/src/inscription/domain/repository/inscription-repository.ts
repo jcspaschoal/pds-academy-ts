@@ -17,7 +17,6 @@ export namespace InscriptionRepository {
     export class SearchResult extends DefaultSearchResult<Inscription, Filter> {
     }
 
-
     export interface Repository
         extends SearchableRepositoryInterface<
             Inscription,

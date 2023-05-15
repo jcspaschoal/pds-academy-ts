@@ -1,5 +1,5 @@
 import {Address, Group, GroupTypes, UserValidatorFactory, UserValidatorTypes,} from "#user/domain";
-import {EntityValidationError, Entity, UniqueEntityId} from "#seedwork/domain";
+import {Entity, EntityValidationError, UniqueEntityId} from "#seedwork/domain";
 
 
 export type UserProperties = {

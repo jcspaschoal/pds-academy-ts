@@ -10,6 +10,7 @@ import { UniqueEntityId } from '@pds/academy-core/@seedwork/domain';
 
 @Injectable()
 export class InscriptionService {
+
   @Inject(GetInscriptionUseCase.UseCase)
   private getInscriptionUseCase: GetInscriptionUseCase.UseCase;
 

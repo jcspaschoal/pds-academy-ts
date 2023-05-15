@@ -21,6 +21,7 @@ export namespace UserPrisma {
 
         async insert(entity: User): Promise<void> {
             const existingUser = await this._findByEmail(entity.email);
+
             if (existingUser) {
                 throw new EmailAlreadyInUseError();
             }
@@ -79,6 +80,7 @@ export namespace UserPrisma {
                         },
                     },
                 })
+
 
                 const permissions: UserPermissions = {
                     group_id: existingUser.group_id,

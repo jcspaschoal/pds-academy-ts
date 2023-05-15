@@ -3,6 +3,7 @@ import {UserProperties, UserUpdateProperties,} from "#user/domain";
 import ClassValidatorFields from "#seedwork/domain/validators/class-validator-fields";
 
 export class UserRules {
+
     @MaxLength(100)
     @MinLength(3)
     @IsString()

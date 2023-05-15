@@ -172,6 +172,7 @@ export namespace InscriptionPrisma {
                             }
                         }
                     )
+
                     const result = await this.prisma.$transaction(
                         [
                             this.prisma.inscription.update(

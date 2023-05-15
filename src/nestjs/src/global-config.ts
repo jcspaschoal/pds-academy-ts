@@ -9,6 +9,9 @@ import { EntityValidationErrorFilter } from './@share/exceptions/entity-validati
 import { ConstraintValidationErrorFilter } from './@share/exceptions/constraint-validation-error.filter';
 import { NotFoundExceptionFilter } from './@share/exceptions/not-found-exception.filter';
 import { ValueObjectValidationErrorFilter } from './@share/exceptions/value-object-validation-error.filter';
+import { InvalidOwnershipErrorFilter } from './@share/exceptions/invalid-ownership.error.filter';
+import { InvalidRoleErrorFilter } from './@share/exceptions/invalid-role.error.filter';
+import { ScoreInsufficientExceptionFilter } from './@share/exceptions/score-insufficient.error.filter';
 
 export function applyGlobalConfig(app: INestApplication) {
   app.useGlobalPipes(
@@ -26,5 +29,8 @@ export function applyGlobalConfig(app: INestApplication) {
     new EntityValidationErrorFilter(),
     new ConstraintValidationErrorFilter(),
     new ValueObjectValidationErrorFilter(),
+    new InvalidOwnershipErrorFilter(),
+    new InvalidRoleErrorFilter(),
+    new ScoreInsufficientExceptionFilter(),
   );
 }

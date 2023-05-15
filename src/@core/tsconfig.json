@@ -17,6 +17,9 @@
       ],
       "#inscription/*": [
         "./inscription/*"
+      ],
+      "#course/*": [
+        "./course/*"
       ]
     },
     "outDir": "./dist"
