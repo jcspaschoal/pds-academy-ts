@@ -9,7 +9,7 @@ export class InvalidRoleErrorFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
 
     response.status(422).json({
-      statusCode: 422,
+      statusCode: 403,
       error: 'Invalid Role',
     });
   }

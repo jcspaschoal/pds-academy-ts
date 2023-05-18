@@ -8,9 +8,8 @@ export class ConstraintValidationErrorFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    response.status(422).json({
-      statusCode: 409,
-      error: 'ConstraintValidationError',
+    response.status(400).json({
+      statusCode: 400,
       message: exception.message,
     });
   }

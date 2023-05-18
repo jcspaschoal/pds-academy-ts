@@ -10,7 +10,7 @@ export class ValueObjectValidationErrorFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
 
     response.status(422).json({
-      statusCode: 404,
+      statusCode: 422,
       error: 'Unprocessable Entity',
       message: union(...Object.values(exception.error)),
     });

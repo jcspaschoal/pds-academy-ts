@@ -17,7 +17,10 @@ import {
   CreateCourseModuleUseCase,
   CreateCourseUseCase,
   CreateLesson,
+  DeleteCourseUseCase,
   JoinCourseUseCase,
+  LeaveCourseUseCase,
+  UpdateCourseUseCase,
 } from '@pds/academy-core/course/application';
 import { UserRepository } from '@pds/academy-core/user/domain';
 import { UserPrisma } from '@pds/academy-core/user/infra';
@@ -40,7 +43,7 @@ export namespace COURSE_PROVIDERS {
     };
 
     export const COURSE_PRISMA_REPOSITORY = {
-      provide: 'CursePrismaRepository',
+      provide: 'CoursePrismaRepository',
       useFactory: (prisma: PrismaClient) => {
         return new CoursePrisma.CoursePrismaRepository(prisma);
       },
@@ -48,12 +51,12 @@ export namespace COURSE_PROVIDERS {
     };
 
     export const COURSE_REPOSITORY = {
-      provide: 'CurseRepository',
-      useExisting: 'CursePrismaRepository',
+      provide: 'CourseRepository',
+      useExisting: 'CoursePrismaRepository',
     };
 
     export const COURSE_MODULE_PRISMA_REPOSITORY = {
-      provide: 'CurseModulePrismaRepository',
+      provide: 'CourseModulePrismaRepository',
       useFactory: (prisma: PrismaClient) => {
         return new CourseModulePrisma.CourseModulePrismaRepository(prisma);
       },
@@ -61,8 +64,8 @@ export namespace COURSE_PROVIDERS {
     };
 
     export const COURSE_MODULE_REPOSITORY = {
-      provide: 'CurseModuleRepository',
-      useExisting: 'CurseModulePrismaRepository',
+      provide: 'CourseModuleRepository',
+      useExisting: 'CourseModulePrismaRepository',
     };
 
     export const LESSON_PRISMA_REPOSITORY = {
@@ -155,6 +158,30 @@ export namespace COURSE_PROVIDERS {
         REPOSITORIES.COURSE_REPOSITORY.provide,
         REPOSITORIES.EXAM_REPOSITORY.provide,
       ],
+    };
+
+    export const LEAVE_COURSE_USE_CASE = {
+      provide: LeaveCourseUseCase.UseCase,
+      useFactory: (courseRepository: CourseRepository.Repository) => {
+        return new LeaveCourseUseCase.UseCase(courseRepository);
+      },
+      inject: [REPOSITORIES.COURSE_REPOSITORY.provide],
+    };
+
+    export const DELETE_COURSE_USE_CASE = {
+      provide: DeleteCourseUseCase.UseCase,
+      useFactory: (courseRepository: CourseRepository.Repository) => {
+        return new DeleteCourseUseCase.UseCase(courseRepository);
+      },
+      inject: [REPOSITORIES.COURSE_REPOSITORY.provide],
+    };
+
+    export const UPDATE_COURSE_USE_CASE = {
+      provide: UpdateCourseUseCase.UseCase,
+      useFactory: (courseRepository: CourseRepository.Repository) => {
+        return new UpdateCourseUseCase.UseCase(courseRepository);
+      },
+      inject: [REPOSITORIES.COURSE_REPOSITORY.provide],
     };
   }
 }

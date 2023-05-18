@@ -11,7 +11,7 @@ import { NotFoundExceptionFilter } from './@share/exceptions/not-found-exception
 import { ValueObjectValidationErrorFilter } from './@share/exceptions/value-object-validation-error.filter';
 import { InvalidOwnershipErrorFilter } from './@share/exceptions/invalid-ownership.error.filter';
 import { InvalidRoleErrorFilter } from './@share/exceptions/invalid-role.error.filter';
-import { ScoreInsufficientExceptionFilter } from './@share/exceptions/score-insufficient.error.filter';
+import { ConditionalErrorExceptionFilter } from './@share/exceptions/conditional-error.filter';
 
 export function applyGlobalConfig(app: INestApplication) {
   app.useGlobalPipes(
@@ -31,6 +31,6 @@ export function applyGlobalConfig(app: INestApplication) {
     new ValueObjectValidationErrorFilter(),
     new InvalidOwnershipErrorFilter(),
     new InvalidRoleErrorFilter(),
-    new ScoreInsufficientExceptionFilter(),
+    new ConditionalErrorExceptionFilter(),
   );
 }

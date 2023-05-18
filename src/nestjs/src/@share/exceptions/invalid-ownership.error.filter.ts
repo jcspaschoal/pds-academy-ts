@@ -8,9 +8,9 @@ export class InvalidOwnershipErrorFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    response.status(422).json({
-      statusCode: 422,
-      error: 'Invalid ownership',
+    response.status(403).json({
+      statusCode: 403,
+      error: 'Access to modify this resource is restricted for the user',
     });
   }
 }

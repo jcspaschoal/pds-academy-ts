@@ -1,6 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 import { Response } from 'express';
-import { ScoreInsufficientException } from '@pds/academy-core/course/domain';
 import { ConditionalError } from '@pds/academy-core/@seedwork/domain';
 
 @Catch(ConditionalError)
