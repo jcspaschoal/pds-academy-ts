@@ -1,6 +1,7 @@
-import {CourseRepository, ScoreInsufficientException} from "#course/domain";
+import {CourseRepository} from "#course/domain";
 import {default as DefaultUseCase} from "@seedwork/application/use-case";
 import {ExamRepository} from "#exam/domain";
+import {ConditionalError} from "#seedwork/domain";
 
 
 export namespace JoinCourseUseCase {
@@ -15,13 +16,11 @@ export namespace JoinCourseUseCase {
         async execute(input: Input): Promise<Output> {
             const course = await this.courseRepository.findById(input.courseId)
             const userExam = await this.examRepository.getLastUserExam(input.userId)
-            console.log(course)
             if (course.canJoin(userExam.value.score ?? 0)) {
                 return await this.courseRepository.joinCourse(input.userId, input.courseId)
-
             }
-            throw new ScoreInsufficientException()
-
+            const scoreDifference = course.minScore - userExam.value.score
+            throw new ConditionalError(`You need ${scoreDifference} more ${scoreDifference === 1 ? 'point' : 'points'} to perform this operation.`)
         }
     }
 

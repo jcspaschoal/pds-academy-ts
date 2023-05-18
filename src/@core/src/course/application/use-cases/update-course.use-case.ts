@@ -2,7 +2,7 @@ import {CourseRepository, InvalidOwnershipError} from "#course/domain";
 import {default as DefaultUseCase} from "@seedwork/application/use-case";
 
 
-export namespace DeleteCourseUseCase {
+export namespace UpdateCourseUseCase {
 
     export class UseCase implements DefaultUseCase<Input, Output> {
         constructor(private readonly courseRepository: CourseRepository.Repository,) {

@@ -2,7 +2,6 @@ import {Entity, EntityValidationError, UniqueEntityId} from "#seedwork/domain";
 import {CourseModuleValidatorFactory, CourseModuleValidatorsTypes, Description, Lesson} from "#course/domain";
 
 
-
 export type CourseModuleProps = {
     courseId: string
     name: string;
@@ -25,9 +24,17 @@ export class CourseModule extends Entity<CourseModuleProps> {
         super(props, id);
         this.validate(props, 'create')
         this.props.createdAt = props.createdAt ?? new Date()
-        this.props.description = this.props.description ?? null
+        this.description = this.props.description ?? null
         this.order = this.props.order
         this.name = this.props.name
+    }
+
+    get description() {
+        return this.props.description
+    }
+
+    public set description(description: Description) {
+        this.props.description = description
     }
 
     get name() {

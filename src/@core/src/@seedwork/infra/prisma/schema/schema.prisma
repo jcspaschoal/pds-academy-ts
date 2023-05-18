@@ -154,18 +154,18 @@ model UserHasCourse {
   Course     Course   @relation(fields: [course_id], references: [id_course])
   created_at DateTime @default(now()) @db.Timestamp()
 
-  @@id([course_id, user_id, created_at])
+  @@id([course_id, user_id])
 }
 
 model Course {
   id_course         String              @id @default(uuid()) @db.Uuid
   user_id           String              @db.Uuid
   name              String              @db.VarChar(255)
-  description       String              @db.VarChar(400)
+  description       String?              @db.VarChar(400)
   min_score         Decimal             @db.Decimal(4, 2)
   created_at        DateTime            @default(now()) @db.Timestamp()
   updated_at        DateTime?           @updatedAt @db.Timestamp()
-  user              User                @relation(fields: [user_id], references: [id_user])
+  user              User                @relation(fields: [user_id], references: [id_user], onDelete: Cascade)
   categoryHasCourse CategoryHasCourse[]
   userHasCourse     UserHasCourse[]
   courseModule      CourseModule[]

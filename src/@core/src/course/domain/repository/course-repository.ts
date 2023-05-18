@@ -22,11 +22,12 @@ export namespace CourseRepository {
             SearchResult
         > {
 
-        findCourseByOwnerId(userId: string): Promise<Course>;
+        joinCourse(userId: string, courseId: string): Promise<void>;
 
-        joinCourse(userId: string, courseId: string): Promise<void>
+        findCoursesByUserId(userId: string): Promise<SearchResult>;
 
-        findCoursesByUserId(userId: string): SearchResult;
+        leaveCourse(userId: string, courseId: string): Promise<void>;
 
     }
 }
+

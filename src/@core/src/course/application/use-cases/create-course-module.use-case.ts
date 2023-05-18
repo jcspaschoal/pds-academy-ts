@@ -17,13 +17,11 @@ export namespace CreateCourseModuleUseCase {
 
         async execute(input: Input): Promise<Output> {
             const description = input.description ? new Description({text: input.description}) : null;
-            const course = await this.courseRepository.findCourseByOwnerId(input.courseId)
-
+            const course = await this.courseRepository.findById(input.courseId)
 
             if (course.props.userId !== input.userId) {
                 throw new InvalidOwnershipError("Invalid ownership")
             }
-
 
             const courseModuleEntity = new CourseModule({
                 courseId: input.courseId,

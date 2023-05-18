@@ -10,7 +10,7 @@ export namespace ListUserCourseUseCase {
         }
 
         async execute(input: Input): Promise<Output> {
-            const courses = this.courseRepository.findCoursesByUserId(input.userId)
+            const courses = await this.courseRepository.findCoursesByUserId(input.userId)
             return this.toOutput(courses)
         }
 
