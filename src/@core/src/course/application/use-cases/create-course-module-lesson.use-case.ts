@@ -22,11 +22,13 @@ export namespace CreateLesson {
 
         async execute(input: Input): Promise<Output> {
             const course = await this.courseRepository.findById(input.courseId)
-            const module = await this.courseModuleRepository.findById(input.moduleId)
 
             if (course.props.userId !== input.userId) {
                 throw new InvalidOwnershipError("Invalid ownership");
             }
+
+            const module = await this.courseModuleRepository.findById(input.moduleId)
+
 
             if (module.props.courseId !== input.courseId) {
                 throw new InvalidOwnershipError("Module does not belong to the course");

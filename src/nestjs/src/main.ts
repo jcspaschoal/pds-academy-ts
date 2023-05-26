@@ -7,4 +7,5 @@ async function bootstrap() {
   applyGlobalConfig(app);
   await app.listen(3000);
 }
+
 bootstrap();

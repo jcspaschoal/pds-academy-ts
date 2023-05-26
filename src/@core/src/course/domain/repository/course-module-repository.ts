@@ -22,6 +22,6 @@ export namespace CourseModuleRepository {
             SearchResult
         > {
 
-        searchModulesByCourseID(courseId: string, SearchParams): Promise<SearchResult>
+        searchModulesByCourseID(courseId: string, props: SearchParams): Promise<SearchResult>
     }
 }

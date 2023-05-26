@@ -1,16 +1,24 @@
-import {PaginationOutputDto, SearchInputDto} from "#seedwork/application";
+import {PaginationOutputDto, PaginationOutputMapper, SearchInputDto} from "#seedwork/application";
 import {default as DefaultUseCase} from "@seedwork/application/use-case";
-import {CourseOutputDto} from "../dto";
+import {CourseOutputDto, CourseOutputMapper} from "../dto";
 import {CourseRepository} from "#course/domain";
-import {UserRepository} from "#user/domain";
 
 export namespace ListCourseUseCase {
     export class UseCase implements DefaultUseCase<Input, Output> {
-        constructor(private readonly courseRepository: CourseRepository.Repository, private readonly userRepository: UserRepository.Repository) {
+        constructor(private readonly courseRepository: CourseRepository.Repository) {
         }
 
         async execute(input: Input): Promise<Output> {
-            return
+            const params = new CourseRepository.SearchParams(input)
+            const items = await this.courseRepository.search(params)
+            return this.toOutput(items)
+        }
+
+        private toOutput(searchResult: CourseRepository.SearchResult): Output {
+            const items = searchResult.items.map((item) => {
+                return CourseOutputMapper.toOutput(item)
+            })
+            return PaginationOutputMapper.toOutput(items, searchResult)
         }
     }
 

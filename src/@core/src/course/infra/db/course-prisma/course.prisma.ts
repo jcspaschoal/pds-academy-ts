@@ -106,8 +106,31 @@ export namespace CoursePrisma {
             }
         }
 
-        search(props: CourseRepositoryContract.SearchParams): Promise<CourseRepositoryContract.SearchResult> {
-            return Promise.resolve(undefined);
+        async search(props: CourseRepositoryContract.SearchParams): Promise<CourseRepositoryContract.SearchResult> {
+            const offset = (props.page - 1) * props.per_page
+            const limit = props.per_page
+            const sort_dir = props.sort_dir ?? "desc"
+            const paginatedInscriptions = await this.prisma.course.findMany(
+                {
+                    skip: offset,
+                    take: limit,
+                    orderBy: [
+                        {
+                            created_at: sort_dir
+                        }
+                    ]
+                }
+            )
+
+            return new CourseRepositoryContract.SearchResult({
+                items: paginatedInscriptions.map((m) => CourseModelMapper.toEntity(m)),
+                current_page: props.page,
+                per_page: props.per_page,
+                total: await this.prisma.inscription.count(),
+                filter: props.filter,
+                sort: props.sort,
+                sort_dir: sort_dir,
+            });
         }
 
         async update(entity: Course): Promise<void> {
@@ -127,8 +150,37 @@ export namespace CoursePrisma {
             )
         }
 
-        findCoursesByUserId(userId: string): Promise<CourseRepositoryContract.SearchResult> {
-            return Promise.resolve(undefined);
+        async findCoursesByUserId(userId: string, props: CourseRepositoryContract.SearchParams): Promise<CourseRepositoryContract.SearchResult> {
+            const offset = (props.page - 1) * props.per_page
+            const limit = props.per_page
+            const sort_dir = props.sort_dir ?? "desc"
+            const paginatedInscriptions = await this.prisma.userHasCourse.findMany(
+                {
+                    where: {
+                        user_id: userId
+                    },
+                    include: {
+                        Course: true
+                    },
+                    skip: offset,
+                    take: limit,
+                    orderBy: [
+                        {
+                            created_at: sort_dir
+                        }
+                    ]
+                }
+            )
+
+            return new CourseRepositoryContract.SearchResult({
+                items: paginatedInscriptions.map((m) => CourseModelMapper.toEntity(m.Course)),
+                current_page: props.page,
+                per_page: props.per_page,
+                total: await this.prisma.inscription.count(),
+                filter: props.filter,
+                sort: props.sort,
+                sort_dir: sort_dir,
+            });
         }
 
         findOwnerByCourseId(userId: string): Promise<Course> {

@@ -9,7 +9,6 @@ export namespace DeleteCourseUseCase {
         }
 
         async execute(input: Input): Promise<Output> {
-
             const course = await this.courseRepository.findById(input.courseId)
             if (course.props.userId !== input.userId) {
                 throw new InvalidOwnershipError("Invalid ownership")

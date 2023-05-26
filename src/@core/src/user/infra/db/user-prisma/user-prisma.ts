@@ -1,4 +1,4 @@
-import {Address as AddressPrismaModel, PrismaClient, User as UserPrismaModel} from "@prisma/client";
+import {Address as AddressPrismaModel, PrismaClient, User as UserPrismaModel, Prisma} from "@prisma/client";
 import {EntityValidationError, LoadEntityError, NotFoundError, UniqueEntityId} from "#seedwork/domain";
 import {hashPassword} from "../../utils";
 import {Address, EmailAlreadyInUseError, Group, User, UserRepository as UserRepositoryContract} from "#user/domain";
@@ -17,6 +17,10 @@ export namespace UserPrisma {
 
         async search(props: UserRepositoryContract.SearchParams): Promise<UserRepositoryContract.SearchResult> {
             throw new Error("Method not implemented.");
+        }
+
+        async getStatistics() {
+        return
         }
 
         async insert(entity: User): Promise<void> {

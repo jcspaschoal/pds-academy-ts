@@ -33,6 +33,8 @@ export namespace UserRepository {
 
         addAddress(entity: User): Promise<void>;
 
+        getStatistics(): Promise<any>;
+
     }
 }
 

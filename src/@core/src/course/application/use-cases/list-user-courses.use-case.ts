@@ -6,11 +6,11 @@ import {CourseRepository} from "#course/domain";
 export namespace ListUserCourseUseCase {
     export class UseCase implements DefaultUseCase<Input, Output> {
         constructor(private readonly courseRepository: CourseRepository.Repository) {
-
         }
 
         async execute(input: Input): Promise<Output> {
-            const courses = await this.courseRepository.findCoursesByUserId(input.userId)
+            const params = new CourseRepository.SearchParams(input.params)
+            const courses = await this.courseRepository.findCoursesByUserId(input.userId, params)
             return this.toOutput(courses)
         }
 
@@ -23,7 +23,10 @@ export namespace ListUserCourseUseCase {
         }
     }
 
-    export type Input = SearchInputDto & { userId: string };
+    export type Input = {
+        params: SearchInputDto,
+        userId: string
+    };
 
 
     export type Output = PaginationOutputDto<CourseOutputDto>;

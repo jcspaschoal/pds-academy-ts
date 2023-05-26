@@ -1,34 +1,40 @@
 import {PaginationOutputDto, PaginationOutputMapper, SearchInputDto} from "#seedwork/application";
 import {default as DefaultUseCase} from "@seedwork/application/use-case";
-import {LessonOutputDto, LessonOutputMapper} from "../dto";
-import {LessonRepository} from "#course/domain";
+import {CourseModuleOutputDto, CourseModuleOutputMapper} from "../dto";
+import {CourseModuleRepository, CourseRepository, InvalidOwnershipError, LessonRepository} from "#course/domain";
 
 export namespace ListLessonUseCase {
     export class UseCase implements DefaultUseCase<Input, Output> {
-        constructor(private readonly lessonRepository: LessonRepository.Repository,) {
+        constructor(private readonly courseRepository: CourseRepository.Repository, private readonly courseModuleRepository: CourseModuleRepository.Repository, private readonly lessonRepository: LessonRepository.Repository) {
         }
 
         async execute(input: Input): Promise<Output> {
-            const lessons = await this.lessonRepository.searchLessonsByModuleId(input.moduleId, input.params)
-            return this.toOutput(lessons)
+            const course = await this.courseRepository.findById(input.courseId)
+            const module = await this.courseModuleRepository.findById(input.moduleId)
+
+            if (module.props.courseId !== input.courseId) {
+                throw new InvalidOwnershipError("Module does not belong to the course");
+            }
+
+            const params = new CourseRepository.SearchParams(input.params)
+            const modules = await this.courseModuleRepository.searchModulesByCourseID(input.courseId, params)
+            return this.toOutput(modules)
         }
 
-        private toOutput(searchResult: LessonRepository.SearchResult): Output {
+        private toOutput(searchResult: CourseModuleRepository.SearchResult): Output {
             const items = searchResult.items.map((item) => {
-                return LessonOutputMapper.toOutput(item)
+                return CourseModuleOutputMapper.toOutput(item)
             })
-
             return PaginationOutputMapper.toOutput(items, searchResult)
         }
     }
 
     export type Input = {
         params: SearchInputDto
-        moduleId: string;
+        moduleId: string; courseId: string; userId: string;
     };
 
-
-    export type Output = PaginationOutputDto<LessonOutputDto>;
+    export type Output = PaginationOutputDto<CourseModuleOutputDto>;
 }
 
 export default ListLessonUseCase;

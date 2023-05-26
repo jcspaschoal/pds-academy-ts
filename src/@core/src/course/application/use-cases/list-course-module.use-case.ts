@@ -6,11 +6,12 @@ import {UserRepository} from "#user/domain";
 
 export namespace ListCourseModuleUseCase {
     export class UseCase implements DefaultUseCase<Input, Output> {
-        constructor(private readonly courseModuleRepository: CourseModuleRepository.Repository, private readonly userRepository: UserRepository.Repository) {
+        constructor(private readonly courseModuleRepository: CourseModuleRepository.Repository) {
         }
 
         async execute(input: Input): Promise<Output> {
-            const courseModules = await this.courseModuleRepository.searchModulesByCourseID(input.courseId, input.params)
+            const params = new CourseModuleRepository.SearchParams(input.params)
+            const courseModules = await this.courseModuleRepository.searchModulesByCourseID(input.courseId, params)
             return this.toOutput(courseModules)
         }
 

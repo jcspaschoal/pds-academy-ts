@@ -20,6 +20,9 @@ import {
   DeleteCourseUseCase,
   JoinCourseUseCase,
   LeaveCourseUseCase,
+  ListCourseModuleUseCase,
+  ListCourseUseCase,
+  ListLessonUseCase,
   UpdateCourseUseCase,
 } from '@pds/academy-core/course/application';
 import { UserRepository } from '@pds/academy-core/user/domain';
@@ -134,6 +137,44 @@ export namespace COURSE_PROVIDERS {
         repository: LessonRepository.Repository,
       ) => {
         return new CreateLesson.UseCase(
+          courseRepository,
+          courseModuleRepository,
+          repository,
+        );
+      },
+      inject: [
+        REPOSITORIES.COURSE_REPOSITORY.provide,
+        REPOSITORIES.COURSE_MODULE_REPOSITORY.provide,
+        REPOSITORIES.LESSON_REPOSITORY.provide,
+      ],
+    };
+
+    export const LIST_COURSE_USE_CASE = {
+      provide: ListCourseUseCase.UseCase,
+      useFactory: (courseRepository: CourseRepository.Repository) => {
+        return new ListCourseUseCase.UseCase(courseRepository);
+      },
+      inject: [REPOSITORIES.COURSE_REPOSITORY.provide],
+    };
+
+    export const LIST_COURSE_MODULE_USE_CASE = {
+      provide: ListCourseModuleUseCase.UseCase,
+      useFactory: (
+        courseModuleRepository: CourseModuleRepository.Repository,
+      ) => {
+        return new ListCourseModuleUseCase.UseCase(courseModuleRepository);
+      },
+      inject: [REPOSITORIES.COURSE_MODULE_REPOSITORY.provide],
+    };
+
+    export const LIST_LESSON_USE_CASE = {
+      provide: ListLessonUseCase.UseCase,
+      useFactory: (
+        courseRepository: CourseRepository.Repository,
+        courseModuleRepository: CourseModuleRepository.Repository,
+        repository: LessonRepository.Repository,
+      ) => {
+        return new ListLessonUseCase.UseCase(
           courseRepository,
           courseModuleRepository,
           repository,

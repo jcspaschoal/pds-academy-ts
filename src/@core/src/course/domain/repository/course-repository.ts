@@ -24,7 +24,7 @@ export namespace CourseRepository {
 
         joinCourse(userId: string, courseId: string): Promise<void>;
 
-        findCoursesByUserId(userId: string): Promise<SearchResult>;
+        findCoursesByUserId(userId: string, props: SearchParams): Promise<SearchResult>;
 
         leaveCourse(userId: string, courseId: string): Promise<void>;
 
