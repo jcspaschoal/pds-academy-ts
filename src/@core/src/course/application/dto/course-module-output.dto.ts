@@ -1,4 +1,4 @@
-import {CourseModule, Description} from "#course/domain";
+import {CourseModule, Description, Lesson} from "#course/domain";
 
 export type CourseModuleOutputDto = {
     id: string;
@@ -6,6 +6,7 @@ export type CourseModuleOutputDto = {
     created_at?: Date;
     description?: Description;
     name: string;
+    lessons?: Lesson[]
 };
 
 export class CourseModuleOutputMapper {

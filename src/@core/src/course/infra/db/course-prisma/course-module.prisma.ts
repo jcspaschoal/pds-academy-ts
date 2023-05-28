@@ -1,4 +1,9 @@
-import {CourseModule, CourseModuleRepository as CourseModuleRepositoryContract, Description} from "#course/domain";
+import {
+    CourseModule,
+    CourseModuleRepository as CourseModuleRepositoryContract,
+    Description,
+    Lesson
+} from "#course/domain";
 import {
     ConstraintValidationError,
     EntityValidationError,
@@ -7,7 +12,7 @@ import {
     UniqueEntityId
 } from "#seedwork/domain";
 import {Prisma, PrismaClient} from "@prisma/client";
-import {CourseModule as CourseModulePrismaModel} from ".prisma/client";
+import {CourseModule as CourseModulePrismaModel, Lesson as LessonModelPrisma} from ".prisma/client";
 
 export namespace CourseModulePrisma {
     export class CourseModulePrismaRepository implements CourseModuleRepositoryContract.Repository {
@@ -45,7 +50,7 @@ export namespace CourseModulePrisma {
             const output = await this.prisma.courseModule.findFirst(
                 {
                     where: {
-                        course_id: idValue
+                        id_module: idValue
                     }
                 }
             );
@@ -74,8 +79,45 @@ export namespace CourseModulePrisma {
             return Promise.resolve(undefined);
         }
 
-        searchModulesByCourseID(courseId: string, SearchParams): Promise<CourseModuleRepositoryContract.SearchResult> {
-            return Promise.resolve(undefined);
+        async searchModulesByCourseID(courseId: string, props: CourseModuleRepositoryContract.SearchParams): Promise<CourseModuleRepositoryContract.SearchResult> {
+            const offset = (props.page - 1) * props.per_page
+            const limit = props.per_page
+            const sort_dir = props.sort_dir ?? "desc"
+            const paginatedCourseModule = await this.prisma.courseModule.findMany(
+                {
+                    where: {
+                        course_id: courseId
+                    },
+                    include: {
+                        lesson: true
+                    },
+                    skip: offset,
+                    take: limit,
+                    orderBy: [
+                        {
+                            created_at: sort_dir,
+                        },
+                        {
+                            order: sort_dir
+                        }
+                    ]
+                }
+            );
+
+            if (!paginatedCourseModule) {
+                throw new NotFoundError(`Failed to find course module`);
+            }
+
+
+            return new CourseModuleRepositoryContract.SearchResult({
+                items: paginatedCourseModule.map((m) => CourseModuleModelMapper.toEntity(m, m.lesson)),
+                current_page: props.page,
+                per_page: props.per_page,
+                total: await this.prisma.inscription.count(),
+                filter: props.filter,
+                sort: props.sort,
+                sort_dir: sort_dir,
+            });
         }
 
         update(entity: CourseModule): Promise<void> {
@@ -85,7 +127,7 @@ export namespace CourseModulePrisma {
     }
 
     export class CourseModuleModelMapper {
-        static toEntity(courseModel: CourseModulePrismaModel): CourseModule {
+        static toEntity(courseModel: CourseModulePrismaModel, lessons?: LessonModelPrisma[]): CourseModule {
             try {
                 const {id_module, ...otherData} = courseModel;
                 return new CourseModule({
@@ -93,8 +135,29 @@ export namespace CourseModulePrisma {
                     description: otherData?.description ? new Description({text: otherData.description}) : null,
                     name: otherData.name,
                     order: otherData.order,
-                    createdAt: otherData.created_at
+                    createdAt: otherData.created_at,
+                    lessons: lessons ? lessons.map((lesson) => LessonModelMapper.toEntity(lesson)) : []
                 }, new UniqueEntityId(id_module))
+            } catch (e) {
+                if (e instanceof EntityValidationError) {
+                    throw new LoadEntityError(e.error);
+                }
+                throw e;
+            }
+        }
+    }
+
+    export class LessonModelMapper {
+        static toEntity(lessonModel: LessonModelPrisma): Lesson {
+            try {
+                const {id_lesson, ...otherData} = lessonModel;
+                return new Lesson({
+                    moduleId: otherData.module_id,
+                    description: otherData?.description ? new Description({text: otherData.description}) : null,
+                    name: otherData.name,
+                    order: otherData.lesson_order,
+                    createdAt: otherData.created_at
+                }, new UniqueEntityId(id_lesson))
             } catch (e) {
                 if (e instanceof EntityValidationError) {
                     throw new LoadEntityError(e.error);

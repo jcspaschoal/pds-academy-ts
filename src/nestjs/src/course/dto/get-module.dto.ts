@@ -10,5 +10,4 @@ export class SearchModuleDto implements ListCourseModuleUseCase.Input {
   courseId: string;
   moduleId: string;
   params: SearchInputDto;
-  userId: string;
 }

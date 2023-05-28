@@ -4,5 +4,5 @@ export class CreateLessonDto {
   name: string;
   order: number;
   description?: string;
-  videoUrl?: string;
+  videoUrl: string;
 }

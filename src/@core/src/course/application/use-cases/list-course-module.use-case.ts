@@ -24,7 +24,7 @@ export namespace ListCourseModuleUseCase {
         }
     }
 
-    export type Input = { params: SearchInputDto, courseId: string };
+    export type Input = { params?: SearchInputDto, courseId: string };
 
 
     export type Output = PaginationOutputDto<CourseModuleOutputDto>;
