@@ -1,4 +1,4 @@
-import {Address as AddressPrismaModel, PrismaClient, User as UserPrismaModel, Prisma} from "@prisma/client";
+import {Address as AddressPrismaModel, PrismaClient, User as UserPrismaModel} from "@prisma/client";
 import {EntityValidationError, LoadEntityError, NotFoundError, UniqueEntityId} from "#seedwork/domain";
 import {hashPassword} from "../../utils";
 import {Address, EmailAlreadyInUseError, Group, User, UserRepository as UserRepositoryContract} from "#user/domain";
@@ -20,7 +20,9 @@ export namespace UserPrisma {
         }
 
         async getStatistics() {
-        return
+            const generalStatistics =   await this.prisma.$queryRaw`SELECT * FROM "GeneralStatistics";`
+
+
         }
 
         async insert(entity: User): Promise<void> {
