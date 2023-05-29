@@ -8,6 +8,7 @@ import {
   GetAddressUseCase,
   GetUserUseCase,
   UpdateUserUseCase,
+  GetStatisticasUseCase,
 } from '@pds/academy-core/user/application';
 import { UserRepository } from '@pds/academy-core/user/domain';
 import { UserPrisma } from '@pds/academy-core/user/infra';
@@ -15,7 +16,6 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaService } from '../database/prisma-service.service';
 
 export namespace USER_PROVIDERS {
-
   export namespace REPOSITORIES {
     export const USER_PRISMA_REPOSITORY = {
       provide: 'UserPrismaRepository',
@@ -52,6 +52,14 @@ export namespace USER_PROVIDERS {
       provide: UpdateUserUseCase.UseCase,
       useFactory: (repository: UserRepository.Repository) => {
         return new UpdateUserUseCase.UseCase(repository);
+      },
+      inject: [REPOSITORIES.USER_REPOSITORY.provide],
+    };
+
+    export const GET_STATISTICS_USE_CASE = {
+      provide: GetStatisticasUseCase.UseCase,
+      useFactory: (repository: UserRepository.Repository) => {
+        return new GetStatisticasUseCase.UseCase(repository);
       },
       inject: [REPOSITORIES.USER_REPOSITORY.provide],
     };

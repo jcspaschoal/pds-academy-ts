@@ -22,6 +22,7 @@ import {
   DeactivateUserUseCase,
   DeleteAddressUseCase,
   GetAddressUseCase,
+  GetStatisticasUseCase,
   UpdateUserUseCase,
 } from '@pds/academy-core/user/application';
 import { ExcludeNullInterceptor } from 'src/@share/interceptors/exclude-null.interceptor';
@@ -46,6 +47,9 @@ export class UsersController {
 
   @Inject(GetAddressUseCase.UseCase)
   private getAddressUseCase: GetAddressUseCase.UseCase;
+
+  @Inject(GetStatisticasUseCase.UseCase)
+  private getStatisticsUseCase: GetStatisticasUseCase.UseCase;
 
   @Post()
   @Public()
@@ -94,6 +98,14 @@ export class UsersController {
   async get_address(@GetCurrentUserId() userId: string) {
     const output = await this.getAddressUseCase.execute({ id: userId });
     return new AddressPresenter(output);
+  }
+
+  @Public()
+  @Get('statistics')
+  @HttpCode(HttpStatus.OK)
+  async get_statistics() {
+    const output = await this.getStatisticsUseCase.execute();
+    return output;
   }
 
   @Post('address')

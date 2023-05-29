@@ -8,6 +8,21 @@ type UserPermissions = {
     permission_names: string[], role?: string, group_id: number
 }
 
+function transformGeneralStatistics(obj: any): any {
+    const transformedObj = { ...obj };
+
+    for (const key in transformedObj) {
+        if (transformedObj[key] === null) {
+            transformedObj[key] = 0;
+        } else if (typeof transformedObj[key] === 'bigint') {
+            transformedObj[key] = Number(transformedObj[key]);
+        }
+    }
+
+    return transformedObj;
+}
+
+
 export namespace UserPrisma {
     export class UserRepository implements UserRepositoryContract.Repository {
         sortableFields: string[] = ["first_name", "last_name", "created_at"];
@@ -20,9 +35,8 @@ export namespace UserPrisma {
         }
 
         async getStatistics() {
-            const generalStatistics =   await this.prisma.$queryRaw`SELECT * FROM "GeneralStatistics";`
-
-
+            const generalStatistics =   await this.prisma.$queryRaw<{}>`SELECT * FROM "GeneralStatistics";`
+            return transformGeneralStatistics(generalStatistics[0]);
         }
 
         async insert(entity: User): Promise<void> {
